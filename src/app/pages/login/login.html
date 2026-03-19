@@ -1,11 +1,18 @@
-<div class="container">
-  <div class="card">
-    <h2> Iniciar Sesión</h2>
+<div class="login-wrapper">
+  <div class="container">
+    <div class="card">
+      <div class="icon-container">🚗</div>
+      <h2>Iniciar Sesión</h2>
 
-    <input type="text" placeholder="Usuario" [(ngModel)]="usuario">
-    <input type="password" placeholder="Contraseña" [(ngModel)]="password">
+      <div class="input-group">
+        <input type="text" class="input-field" placeholder="Usuario" [(ngModel)]="usuario">
+      </div>
+      <div class="input-group">
+        <input type="password" class="input-field" placeholder="Contraseña" [(ngModel)]="password">
+      </div>
 
-    <button (click)="login()">Ingresar</button>
+      <button class="btn-primary" (click)="login()">Entrar</button>
 
+    </div>
   </div>
 </div>

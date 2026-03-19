@@ -1,20 +1,59 @@
-<div class="main">
-  <div class="overlay">
-    <div class="card">
+<div class="main-wrapper">
+  <div class="header">
+    <h1>Sistema de Parqueadero</h1>
+    <p class="welcome">Gestiona tus reservas y espacios rápidamente</p>
+  </div>
 
-      <h1> Sistema de Parqueadero</h1>
-      <p class="welcome">Bienvenido, gestiona tu parqueadero fácilmente</p>
+  <div class="container">
+    <div class="menu">
+      
+      <!-- Card Vehiculos -->
+      <a routerLink="/vehiculos" class="content-card card-blue">
+        <div class="card-icon">🚙</div>
+        <div class="card-info">
+          <h3>Mis Vehículos</h3>
+          <p>Gestionar flota</p>
+        </div>
+      </a>
 
-      <div class="menu">
-        <a routerLink="/vehiculos"> Vehículos</a>
-        <a routerLink="/ingreso"> Ingreso</a>
-        <a routerLink="/salida"> Salida</a>
-        <a routerLink="/historial"> Historial</a>
-        <a routerLink="/configuracion"> Configuración</a>
-      </div>
+      <!-- Card Ingreso -->
+      <a routerLink="/ingreso" class="content-card card-green">
+        <div class="card-icon">📥</div>
+        <div class="card-info">
+          <h3>Ingreso</h3>
+          <span class="badge badge-success">Disponible</span>
+        </div>
+      </a>
 
-      <p class="footer"> Sistema de Parqueadero</p>
+      <!-- Card Salida -->
+      <a routerLink="/salida" class="content-card card-red">
+        <div class="card-icon">📤</div>
+        <div class="card-info">
+          <h3>Salida</h3>
+          <span class="badge badge-danger">Ocupado</span>
+        </div>
+      </a>
+
+      <!-- Card Historial -->
+      <a routerLink="/historial" class="content-card card-yellow">
+        <div class="card-icon">📅</div>
+        <div class="card-info">
+          <h3>Historial</h3>
+          <p>Ver reservas recientes</p>
+        </div>
+      </a>
+
+      <!-- Card Config -->
+      <a routerLink="/configuracion" class="content-card card-gray">
+        <div class="card-icon">⚙️</div>
+        <div class="card-info">
+          <h3>Configuración</h3>
+          <p>Ajustes del sistema</p>
+        </div>
+      </a>
 
     </div>
   </div>
+
+  <p class="footer">Sistema de Parqueadero &copy; 2026</p>
 </div>
