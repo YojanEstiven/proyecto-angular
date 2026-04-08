@@ -1,1 +1,23 @@
-<p>ingreso works!</p>
+<div class="container">
+
+  <h2> Registro de Ingreso</h2>
+
+  <div class="form">
+    <select [(ngModel)]="vehiculoSeleccionado">
+      <option value="">Seleccione vehículo</option>
+      <option *ngFor="let v of vehiculos" [value]="v.placa">
+        {{ v.placa }} - {{ v.tipo }}
+      </option>
+    </select>
+
+    <button (click)="registrarIngreso()">Registrar</button>
+  </div>
+
+  
+  <div class="lista">
+    <div *ngFor="let i of ingresos" class="item">
+      <span>{{ i.placa }} - {{ i.horaIngreso }}</span>
+    </div>
+  </div>
+
+</div>
