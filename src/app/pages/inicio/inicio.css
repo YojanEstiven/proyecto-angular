@@ -118,7 +118,6 @@
   font-size: 14px;
 }
 
-/* Badges coloridos */
 .badge {
   display: inline-block;
   padding: 6px 12px;
@@ -144,4 +143,18 @@
   color: #777;
   padding: 40px 20px;
   margin-top: auto;
+}
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.top-bar button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
 }

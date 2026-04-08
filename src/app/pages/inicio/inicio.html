@@ -1,3 +1,7 @@
+<div class="top-bar">
+  <button (click)="logout()">Cerrar sesión</button>
+</div>
+
 <div class="main-wrapper">
   <div class="header">
     <h1>Sistema de Parqueadero</h1>
@@ -8,49 +12,49 @@
     <div class="menu">
       
       <!-- Card Vehiculos -->
-      <a routerLink="/vehiculos" class="content-card card-blue">
+      <div class="content-card card-blue" (click)="irVehiculos()">
         <div class="card-icon">🚙</div>
         <div class="card-info">
           <h3>Mis Vehículos</h3>
           <p>Gestionar flota</p>
         </div>
-      </a>
+      </div>
 
       <!-- Card Ingreso -->
-      <a routerLink="/ingreso" class="content-card card-green">
+      <div class="content-card card-green" (click)="irIngreso()">
         <div class="card-icon">📥</div>
         <div class="card-info">
           <h3>Ingreso</h3>
           <span class="badge badge-success">Disponible</span>
         </div>
-      </a>
+      </div>
 
       <!-- Card Salida -->
-      <a routerLink="/salida" class="content-card card-red">
+      <div class="content-card card-red" (click)="irSalida()">
         <div class="card-icon">📤</div>
         <div class="card-info">
           <h3>Salida</h3>
           <span class="badge badge-danger">Ocupado</span>
         </div>
-      </a>
+      </div>
 
       <!-- Card Historial -->
-      <a routerLink="/historial" class="content-card card-yellow">
+      <div class="content-card card-yellow" (click)="irHistorial()">
         <div class="card-icon">📅</div>
         <div class="card-info">
           <h3>Historial</h3>
           <p>Ver reservas recientes</p>
         </div>
-      </a>
+      </div>
 
       <!-- Card Config -->
-      <a routerLink="/configuracion" class="content-card card-gray">
+      <div class="content-card card-gray" (click)="irConfiguracion()">
         <div class="card-icon">⚙️</div>
         <div class="card-info">
           <h3>Configuración</h3>
           <p>Ajustes del sistema</p>
         </div>
-      </a>
+      </div>
 
     </div>
   </div>

@@ -21,7 +21,7 @@ export class LoginComponent {
   login() {
     if (this.usuario === 'yojan' && this.password === '1234') {
       localStorage.setItem('login', 'true');
-      this.router.navigate(['/']);
+      this.router.navigate(['./']);
     } else {
       this.error = true;
     }
