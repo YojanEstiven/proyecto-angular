@@ -13,9 +13,13 @@
 
       <button class="btn-primary" (click)="login()">Entrar</button>
 
-       @if (error) {
-      <p class="error">Usuario o contraseña incorrectos</p>
-    }
+      @if (error) {
+        <p class="error">Usuario o contraseña incorrectos</p>
+      }
+
+      <div class="footer-link">
+        ¿No tienes cuenta? <a (click)="irARegistro()">Regístrate</a>
+      </div>
 
     </div>
   </div>

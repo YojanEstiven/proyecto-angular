@@ -5,11 +5,13 @@ import { IngresoComponent } from './pages/ingreso/ingreso';
 import { SalidaComponent } from './pages/salida/salida';
 import { HistorialComponent} from './pages/historial/historial';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion';
+import { RegistroComponent } from './pages/registro/registro';
 import { Routes } from '@angular/router';
 
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegistroComponent },
   { 
     path: '', 
     component: InicioComponent,

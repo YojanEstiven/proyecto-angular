@@ -36,19 +36,25 @@
   height: 80px;
   line-height: 80px;
   border-radius: 50%;
-  margin: 0 auto 24px auto;
+  margin: 0 auto 16px auto;
   color: #0056b3;
 }
 
 h2 {
   color: #0056b3; 
-  margin-bottom: 32px;
+  margin-bottom: 8px;
   font-weight: 700;
   font-size: 28px;
 }
 
+.subtitle {
+  color: #6c757d;
+  font-size: 15px;
+  margin-bottom: 32px;
+}
+
 .input-group {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   text-align: left;
 }
 
@@ -95,8 +101,14 @@ h2 {
   box-shadow: 0 6px 12px rgba(255, 193, 7, 0.4);
 }
 
-.btn-primary:active {
-  transform: scale(0.98);
+.error-msg {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 20px;
+  font-weight: 500;
+  background: #fff5f5;
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .footer-link {
@@ -114,14 +126,4 @@ h2 {
 
 .footer-link a:hover {
   text-decoration: underline;
-}
-
-.error {
-  color: #dc3545;
-  font-size: 14px;
-  margin-top: 20px;
-  font-weight: 500;
-  background: #fff5f5;
-  padding: 10px;
-  border-radius: 8px;
 }

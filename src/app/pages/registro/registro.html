@@ -1,0 +1,33 @@
+<div class="login-wrapper">
+  <div class="container">
+    <div class="card">
+      <div class="icon-container">👤</div>
+      <h2>Crear Cuenta</h2>
+      
+      <p class="subtitle">Regístrate para gestionar tu parqueadero</p>
+
+      <div class="input-group">
+        <input type="text" class="input-field" placeholder="Nombre Completo" [(ngModel)]="nombre">
+      </div>
+      
+      <div class="input-group">
+        <input type="email" class="input-field" placeholder="Correo Electrónico" [(ngModel)]="correo">
+      </div>
+
+      <div class="input-group">
+        <input type="password" class="input-field" placeholder="Contraseña" [(ngModel)]="password">
+      </div>
+
+      <button class="btn-primary" (click)="registrarUser()">Registrarse</button>
+
+      <div *ngIf="mensajeError" class="error-msg">
+        ⚠️ {{ mensajeError }}
+      </div>
+
+      <div class="footer-link">
+        ¿Ya tienes cuenta? <a (click)="irALogin()">Inicia Sesión</a>
+      </div>
+
+    </div>
+  </div>
+</div>
