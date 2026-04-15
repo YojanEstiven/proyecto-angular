@@ -1,1 +1,18 @@
-<p>configuracion works!</p>
+<div class="container">
+  <h2>Configuración del Sistema</h2>
+
+  <div class="card-config">
+    <h3>Tarifa del Parqueadero</h3>
+    <p>Define el valor que se cobrará por cada minuto de permanencia.</p>
+    
+    <div class="form-group">
+      <label>Precio por Minuto ($):</label>
+      <input type="number" [(ngModel)]="precioPorMinuto">
+    </div>
+
+    <div class="botones-accion">
+      <button class="btn-guardar" (click)="guardarConfig()">Guardar Cambios</button>
+      <button class="btn-cancelar" (click)="volver()">Cancelar</button>
+    </div>
+  </div>
+</div>

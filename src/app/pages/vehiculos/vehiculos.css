@@ -1,10 +1,8 @@
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1020ac, #70aadd);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
+  background: linear-gradient(135deg, #1d2b64, #3a7bd5);
+  padding: 40px;
+  text-align: center;
 }
 
 h2 {
@@ -13,13 +11,12 @@ h2 {
 }
 
 .form {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  display: flex;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 12px;
+  display: inline-flex;
   gap: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 input, select {
@@ -31,35 +28,91 @@ input, select {
 button {
   padding: 10px 15px;
   border: none;
-  border-radius: 10px;
-  background: #007bff;
-  color: white;
+  border-radius: 8px;
   cursor: pointer;
 }
 
 button:hover {
-  background: #0056b3;
+  opacity: 0.9;
 }
 
-.lista {
-  width: 100%;
-  max-width: 400px;
-}
-
-.item {
-  background: white;
-  padding: 12px;
-  margin: 8px 0;
-  border-radius: 10px;
+.acciones {
   display: flex;
-  justify-content: space-between;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  gap: 10px;
 }
 
-.item button {
+.editar {
+  background: #ffc107;
+}
+
+.borrar {
   background: red;
+  color: white;
+}
+.notificacion-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #333; 
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000; 
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-left: 5px solid #ff4444; 
+  animation: slideIn 0.3s ease-out; 
+}
+.icono {
+  font-size: 1.2rem;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.tabla-contenedor {
+  background: white;
+  border-radius: 12px;
+  margin: 20px auto; 
+  max-width: 800px;  
+  overflow: hidden; 
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-.item button:hover {
-  background: darkred;
+.tabla-vehiculos {
+  width: 100%;
+  border-collapse: collapse;
+  color: #333;
+}
+
+.tabla-vehiculos th {
+  background-color: #f1f1f1;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+.tabla-vehiculos td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.placa-texto {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.acciones {
+  display: flex;
+  gap: 8px;
 }

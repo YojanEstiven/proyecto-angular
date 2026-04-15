@@ -1,1 +1,32 @@
-<p>historial works!</p>
+<div class="container">
+
+  <h2>Historial de Movimientos</h2>
+  
+  <div class="tabla-contenedor">
+    <table class="tabla-vehiculos">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Ingreso</th>
+          <th>Salida</th>
+          <th>Permanencia</th>
+          <th>Valor Pagado</th>
+        </tr>
+      </thead>
+      <tbody>
+    <tr *ngFor="let h of historial">
+         <td class="placa-texto">{{ h.placa }}</td>
+         <td>{{ h.ingreso | date:"d 'de' MMMM 'de' y, h:mm a" }}</td>
+         <td>{{ h.salida | date:"d 'de' MMMM 'de' y, h:mm a" }}</td>
+         <td>{{ h.tiempo }}</td>
+         <td class="pago-resaltado">${{ h.pago }}</td>
+</tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="historial.length === 0" class="mensaje-vacio">
+      No se han encontrado registros de salidas anteriores.
+    </div>
+  </div>
+
+</div>

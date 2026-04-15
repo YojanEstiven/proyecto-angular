@@ -1,6 +1,6 @@
 <div class="container">
 
-  <h2> Registro de Ingreso</h2>
+  <h2>Registro de Ingreso</h2>
 
   <div class="form">
     <select [(ngModel)]="vehiculoSeleccionado">
@@ -13,10 +13,24 @@
     <button (click)="registrarIngreso()">Registrar</button>
   </div>
 
-  
-  <div class="lista">
-    <div *ngFor="let i of ingresos" class="item">
-      <span>{{ i.placa }} - {{ i.horaIngreso }}</span>
+  <div class="tabla-contenedor">
+    <table class="tabla-vehiculos">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Fecha / Hora de Ingreso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of ingresos">
+          <td class="placa-texto">{{ i.placa }}</td>
+          <td>{{ i.horaIngreso | date:"d 'de' MMMM, h:mm a" }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="ingresos.length === 0" class="mensaje-vacio">
+      No hay ingresos registrados actualmente.
     </div>
   </div>
 

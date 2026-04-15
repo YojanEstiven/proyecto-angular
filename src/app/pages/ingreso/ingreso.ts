@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ingreso',
@@ -15,8 +16,8 @@ export class IngresoComponent {
   ingresos: any[] = [];
   vehiculoSeleccionado = '';
 
-  constructor() {
-    
+  constructor(private router: Router) {
+   
     const dataVehiculos = localStorage.getItem('vehiculos');
     if (dataVehiculos) {
       this.vehiculos = JSON.parse(dataVehiculos);
@@ -29,20 +30,19 @@ export class IngresoComponent {
     }
   }
 
-  registrarIngreso() {
-    if (this.vehiculoSeleccionado) {
-
-      const ingreso = {
-        placa: this.vehiculoSeleccionado,
-        horaIngreso: new Date().toLocaleString()
-      };
-
-      this.ingresos.push(ingreso);
-
-      localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
-
-      this.vehiculoSeleccionado = '';
-    }
+ registrarIngreso() {
+  if (!this.vehiculoSeleccionado) {
+    alert('Seleccione un vehículo');
+    return;
   }
 
+  const ingreso = {
+    placa: this.vehiculoSeleccionado,
+    horaIngreso: new Date().toISOString() 
+  };
+
+  this.ingresos.push(ingreso);
+  localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
+  this.router.navigate(['/inicio']);
+}
 }

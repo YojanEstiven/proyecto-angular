@@ -1,26 +1,54 @@
 <div class="container">
+  <div *ngIf="mensajeError" class="notificacion-toast">
+    <span class="icono">⚠️</span>
+    {{ mensajeError }}
+  </div>
 
   <h2>🚗 Gestión de Vehículos</h2>
 
-  <!-- FORMULARIO -->
   <div class="form">
     <input type="text" placeholder="Placa" [(ngModel)]="placa">
-    
+
     <select [(ngModel)]="tipo">
       <option value="">Seleccione tipo</option>
       <option value="Carro">Carro</option>
       <option value="Moto">Moto</option>
     </select>
 
-    <button (click)="agregarVehiculo()">Agregar</button>
+    <button (click)="guardarVehiculo()">
+      {{ editandoIndex !== null ? 'Actualizar' : 'Agregar' }}
+    </button>
   </div>
 
-  <!-- LISTA -->
-  <div class="lista">
-    <div *ngFor="let v of vehiculos; let i = index" class="item">
-      <span>{{ v.placa }} - {{ v.tipo }}</span>
-      <button (click)="eliminarVehiculo(i)">Borrar</button>
+  <div class="tabla-contenedor">
+    <table class="tabla-vehiculos">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Tipo de Vehículo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let v of vehiculos; let i = index">
+          <td class="placa-texto">{{ v.placa }}</td>
+          <td>
+            <span *ngIf="v.tipo === 'Carro'">🚗 Carro</span>
+            <span *ngIf="v.tipo === 'Moto'">🏍️ Moto</span>
+            <span *ngIf="v.tipo !== 'Carro' && v.tipo !== 'Moto'">{{ v.tipo }}</span>
+          </td>
+          <td>
+            <div class="acciones">
+              <button class="editar" (click)="editarVehiculo(i)">Editar</button>
+              <button class="borrar" (click)="eliminarVehiculo(i)">Borrar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div *ngIf="vehiculos.length === 0" style="padding: 20px; color: #666;">
+      No hay vehículos registrados.
     </div>
   </div>
-
 </div>

@@ -2,9 +2,9 @@ import { LoginComponent } from './pages/login/login';
 import { InicioComponent } from './pages/inicio/inicio';
 import { VehiculosComponent } from './pages/vehiculos/vehiculos';
 import { IngresoComponent } from './pages/ingreso/ingreso';
-import { Salida } from './pages/salida/salida';
-import { Historial} from './pages/historial/historial';
-import { Configuracion } from './pages/configuracion/configuracion';
+import { SalidaComponent } from './pages/salida/salida';
+import { HistorialComponent} from './pages/historial/historial';
+import { ConfiguracionComponent } from './pages/configuracion/configuracion';
 import { Routes } from '@angular/router';
 
 
@@ -13,7 +13,7 @@ export const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'vehiculos', component: VehiculosComponent },
   { path: 'ingreso', component: IngresoComponent },
-  { path: 'salida', component: Salida },
-  { path: 'historial', component: Historial },
-  { path: 'configuracion', component: Configuracion }
+  { path: 'salida', component: SalidaComponent },
+  { path: 'historial', component: HistorialComponent },
+  { path: 'configuracion', component: ConfiguracionComponent }
 ];

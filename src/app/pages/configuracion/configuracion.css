@@ -1,0 +1,83 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000428, #004e92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+h2 { 
+  color: white; 
+  margin-top: 20px; 
+}
+
+.card-config {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  text-align: center;
+}
+
+.card-config h3 { 
+  color: #333; 
+  margin-bottom: 10px; 
+}
+.card-config p { 
+  color: #666; 
+  font-size: 0.9rem; 
+  margin-bottom: 20px; 
+}
+
+.form-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box; 
+  font-size: 1rem;
+}
+
+.botones-accion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-guardar {
+  padding: 12px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-cancelar {
+  padding: 12px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover { 
+  opacity: 0.9; 
+}

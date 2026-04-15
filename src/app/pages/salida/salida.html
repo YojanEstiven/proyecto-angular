@@ -1,1 +1,38 @@
-<p>salida works!</p>
+<div class="container">
+  <h2> Registro de Salida</h2>
+  
+
+  <div class="form">
+    <select [(ngModel)]="vehiculoASalir">
+      <option value="">Seleccione placa para salida</option>
+      <option *ngFor="let i of ingresos" [value]="i.placa">
+        {{ i.placa }}
+      </option>
+    </select>
+
+    <button class="btn-salida" (click)="registrarSalida()">Procesar Salida</button>
+  </div>
+
+  <div class="tabla-contenedor">
+    <table class="tabla-vehiculos">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Ingresó a las</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of ingresos">
+          <td class="placa-texto">{{ i.placa }}</td>
+          <td>{{ i.horaIngreso | date:"d 'de' MMMM, h:mm a" }}</td>
+          <td><span class="badge-activo">Parqueado</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="ingresos.length === 0" class="mensaje-vacio">
+      No hay vehículos registrados en el parqueadero.
+    </div>
+  </div>
+</div>

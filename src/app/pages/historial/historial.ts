@@ -1,9 +1,26 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-historial',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './historial.html',
-  styleUrl: './historial.css',
+  styleUrls: ['./historial.css']
 })
-export class Historial {}
+export class HistorialComponent {
+
+  historial: any[] = [];
+
+  constructor(private router: Router) {
+    
+    const data = localStorage.getItem('historial');
+    if (data) {
+      this.historial = JSON.parse(data);
+    }
+  }
+
+  
+
+}
