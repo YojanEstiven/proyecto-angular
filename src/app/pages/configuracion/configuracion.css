@@ -1,83 +1,214 @@
-.container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #000428, #004e92);
+.page-container {
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.page-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 30px;
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
-h2 { 
-  color: white; 
-  margin-top: 20px; 
+.header-icon {
+  font-size: 2.5rem;
+  background: #f1f5f9;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
 }
 
-.card-config {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  text-align: center;
+.header-info h1 {
+  font-size: 2rem;
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
-.card-config h3 { 
-  color: #333; 
-  margin-bottom: 10px; 
-}
-.card-config p { 
-  color: #666; 
-  font-size: 0.9rem; 
-  margin-bottom: 20px; 
-}
-
-.form-group {
-  margin-bottom: 25px;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #444;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  box-sizing: border-box; 
+.header-info p {
+  color: #64748b;
   font-size: 1rem;
 }
 
-.botones-accion {
+.settings-grid {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 24px;
 }
 
-.btn-guardar {
-  padding: 12px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
+.settings-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+}
+
+.section-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #4f46e5;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+/* FORM FIELDS */
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.input-with-symbol {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.symbol {
+  position: absolute;
+  left: 16px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 16px;
+  padding-left: 36px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.form-control:focus {
+  border-color: #4f46e5;
+}
+
+.input-desc {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* SETTING ITEM (TOGGLES) */
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-info strong {
+  display: block;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.setting-info span {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* TOGGLE CSS */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e2e8f0;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+input:checked + .slider {
+  background-color: #10b981;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* ACTIONS */
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.btn-cancel {
+  padding: 14px 24px;
+  background: white;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.btn-cancelar {
-  padding: 12px;
-  background: #6c757d;
+.btn-save {
+  padding: 14px 32px;
+  background: #4f46e5;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
 }
 
-button:hover { 
-  opacity: 0.9; 
+.btn-save:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

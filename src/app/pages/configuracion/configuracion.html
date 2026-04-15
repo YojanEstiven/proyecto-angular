@@ -1,18 +1,59 @@
-<div class="container">
-  <h2>Configuración del Sistema</h2>
-
-  <div class="card-config">
-    <h3>Tarifa del Parqueadero</h3>
-    <p>Define el valor que se cobrará por cada minuto de permanencia.</p>
-    
-    <div class="form-group">
-      <label>Precio por Minuto ($):</label>
-      <input type="number" [(ngModel)]="precioPorMinuto">
+<div class="page-container">
+  
+  <header class="page-header">
+    <div class="header-icon">⚙️</div>
+    <div class="header-info">
+      <h1>Configuración del Sistema</h1>
+      <p>Ajusta los parámetros operativos y preferencias de la aplicación.</p>
     </div>
+  </header>
 
-    <div class="botones-accion">
-      <button class="btn-guardar" (click)="guardarConfig()">Guardar Cambios</button>
-      <button class="btn-cancelar" (click)="volver()">Cancelar</button>
+  <main class="settings-grid">
+    <!-- Sección de Tarifas -->
+    <section class="settings-card">
+      <h3 class="section-title">Parámetros Financieros</h3>
+      
+      <div class="form-group">
+        <label>Tarifa por Minuto</label>
+        <div class="input-with-symbol">
+          <span class="symbol">$</span>
+          <input type="number" [(ngModel)]="precioPorMinuto" class="form-control">
+        </div>
+        <p class="input-desc">Este valor se usará para calcular el cobro en el módulo de Salida.</p>
+      </div>
+    </section>
+
+    <!-- Sección de Preferencias -->
+    <section class="settings-card">
+      <h3 class="section-title">Preferencias de Interfaz</h3>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <strong>Notificaciones</strong>
+          <span>Recibir alertas sobre ingresos y salidas.</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="notificaciones">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <strong>Respaldo Automático</strong>
+          <span>Guardar datos en la nube periódicamente.</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="respaldoAutomatico">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Botones de Acción -->
+    <div class="settings-actions">
+      <button class="btn-cancel" (click)="volver()">Cancelar</button>
+      <button class="btn-save" (click)="guardarConfig()">Guardar Cambios</button>
     </div>
-  </div>
+  </main>
 </div>

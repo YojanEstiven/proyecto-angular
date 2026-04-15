@@ -1,32 +1,53 @@
-<div class="container">
-
-  <h2>Historial de Movimientos</h2>
+<div class="page-container">
   
-  <div class="tabla-contenedor">
-    <table class="tabla-vehiculos">
-      <thead>
-        <tr>
-          <th>Placa</th>
-          <th>Ingreso</th>
-          <th>Salida</th>
-          <th>Permanencia</th>
-          <th>Valor Pagado</th>
-        </tr>
-      </thead>
-      <tbody>
-    <tr *ngFor="let h of historial">
-         <td class="placa-texto">{{ h.placa }}</td>
-         <td>{{ h.ingreso | date:"d 'de' MMMM 'de' y, h:mm a" }}</td>
-         <td>{{ h.salida | date:"d 'de' MMMM 'de' y, h:mm a" }}</td>
-         <td>{{ h.tiempo }}</td>
-         <td class="pago-resaltado">${{ h.pago }}</td>
-</tr>
-      </tbody>
-    </table>
-
-    <div *ngIf="historial.length === 0" class="mensaje-vacio">
-      No se han encontrado registros de salidas anteriores.
+  <header class="page-header">
+    <div class="header-icon">📜</div>
+    <div class="header-info">
+      <h1>Historial de Movimientos</h1>
+      <p>Consulta el registro de entradas y salidas procesadas.</p>
     </div>
-  </div>
+  </header>
 
+  <section class="card table-card">
+    <div class="table-container">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Placa</th>
+            <th>Ingreso</th>
+            <th>Salida</th>
+            <th>Duración</th>
+            <th class="text-right">Total Pagado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let h of historial">
+            <td class="placa-cell">
+              <span class="placa-pill">{{ h.placa }}</span>
+            </td>
+            <td class="time-cell">
+              <span class="date">{{ h.ingreso | date:'d MMM, y' }}</span>
+              <span class="time">{{ h.ingreso | date:'h:mm a' }}</span>
+            </td>
+            <td class="time-cell">
+              <span class="date">{{ h.salida | date:'d MMM, y' }}</span>
+              <span class="time">{{ h.salida | date:'h:mm a' }}</span>
+            </td>
+            <td>
+              <span class="duration-badge">{{ h.tiempo }}</span>
+            </td>
+            <td class="pago-cell text-right">
+              ${{ h.pago }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Empty State -->
+      <div *ngIf="historial.length === 0" class="empty-state">
+        <div class="empty-icon">📂</div>
+        <p>No se han encontrado registros de salidas anteriores.</p>
+      </div>
+    </div>
+  </section>
 </div>

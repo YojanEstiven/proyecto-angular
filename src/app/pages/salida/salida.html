@@ -1,38 +1,70 @@
-<div class="container">
-  <h2> Registro de Salida</h2>
+<div class="page-container">
   
-
-  <div class="form">
-    <select [(ngModel)]="vehiculoASalir">
-      <option value="">Seleccione placa para salida</option>
-      <option *ngFor="let i of ingresos" [value]="i.placa">
-        {{ i.placa }}
-      </option>
-    </select>
-
-    <button class="btn-salida" (click)="registrarSalida()">Procesar Salida</button>
-  </div>
-
-  <div class="tabla-contenedor">
-    <table class="tabla-vehiculos">
-      <thead>
-        <tr>
-          <th>Placa</th>
-          <th>Ingresó a las</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let i of ingresos">
-          <td class="placa-texto">{{ i.placa }}</td>
-          <td>{{ i.horaIngreso | date:"d 'de' MMMM, h:mm a" }}</td>
-          <td><span class="badge-activo">Parqueado</span></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div *ngIf="ingresos.length === 0" class="mensaje-vacio">
-      No hay vehículos registrados en el parqueadero.
+  <header class="page-header">
+    <div class="header-icon">📤</div>
+    <div class="header-info">
+      <h1>Registro de Salida</h1>
+      <p>Procesa el cobro y libera el espacio de parqueo.</p>
     </div>
+  </header>
+
+  <div class="layout-grid">
+    <!-- Selector de Vehículo -->
+    <section class="card selection-card">
+      <div class="form-group">
+        <label>Seleccionar Vehículo en Parqueadero</label>
+        <select 
+          class="form-control" 
+          [(ngModel)]="vehiculoASalir" 
+          (change)="seleccionarVehiculo(vehiculoASalir)">
+          <option value="">-- Selecciona una placa --</option>
+          <option *ngFor="let i of ingresos" [value]="i.placa">
+            {{ i.placa }}
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="ingresos.length === 0" class="empty-state-mini">
+        No hay vehículos parqueados.
+      </div>
+    </section>
+
+    <!-- Resumen de Liquidación -->
+    <section class="card summary-card" *ngIf="resumenSalida">
+      <div class="summary-header">
+        <div class="plate-badge">{{ resumenSalida.placa }}</div>
+        <div class="type-indicator">{{ resumenSalida.tipo }}</div>
+      </div>
+
+      <div class="summary-details">
+        <div class="detail-row">
+          <span class="label">Ingreso:</span>
+          <span class="value">{{ resumenSalida.ingreso | date:'h:mm a' }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Salida (Ahora):</span>
+          <span class="value">{{ resumenSalida.salida | date:'h:mm a' }}</span>
+        </div>
+        <div class="detail-row highlight">
+          <span class="label">Tiempo Total:</span>
+          <span class="value">{{ resumenSalida.minutos }} minutos</span>
+        </div>
+      </div>
+
+      <div class="total-section">
+        <span class="total-label">Total a Pagar</span>
+        <h2 class="total-value">${{ resumenSalida.total }}</h2>
+      </div>
+
+      <button class="btn-confirm-exit" (click)="registrarSalida()">
+        Confirmar y Procesar Pago
+      </button>
+    </section>
+
+    <!-- Placeholder si no hay selección -->
+    <section class="card placeholder-card" *ngIf="!resumenSalida && ingresos.length > 0">
+      <div class="placeholder-icon">📋</div>
+      <p>Selecciona un vehículo de la izquierda para ver el resumen de cobro.</p>
+    </section>
   </div>
 </div>

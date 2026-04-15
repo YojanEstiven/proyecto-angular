@@ -14,18 +14,24 @@ export class VehiculosComponent {
   placa = '';
   tipo = '';
   vehiculos: any[] = [];
+  ingresosActivos: any[] = [];
   editandoIndex: number | null = null;
-
-  constructor() {
-    const data = localStorage.getItem('vehiculos');
-    if (data) {
-      this.vehiculos = JSON.parse(data);
-    }
-  }
   mensajeError = '';
 
-  guardarVehiculo() {
+  constructor() {
+    this.cargarDatos();
+  }
 
+  cargarDatos() {
+    this.vehiculos = JSON.parse(localStorage.getItem('vehiculos') || '[]');
+    this.ingresosActivos = JSON.parse(localStorage.getItem('ingresos') || '[]');
+  }
+
+  estaParqueado(placa: string): boolean {
+    return this.ingresosActivos.some(i => i.placa === placa);
+  }
+
+  guardarVehiculo() {
     if (!this.placa || !this.tipo) {
       this.mensajeError = 'Debe ingresar placa y seleccionar el tipo de vehículo';
       return;
@@ -40,6 +46,11 @@ export class VehiculosComponent {
       };
       this.editandoIndex = null;
     } else {
+      // Evitar placas duplicadas
+      if (this.vehiculos.find(v => v.placa === this.placa)) {
+        this.mensajeError = 'Esta placa ya está registrada';
+        return;
+      }
       this.vehiculos.push({
         placa: this.placa,
         tipo: this.tipo
@@ -48,10 +59,9 @@ export class VehiculosComponent {
 
     localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));
     this.limpiar();
-
+    this.cargarDatos(); // Refresh list
   }
 
-  
   editarVehiculo(index: number) {
     this.editandoIndex = index;
     this.placa = this.vehiculos[index].placa;
@@ -60,9 +70,17 @@ export class VehiculosComponent {
   }
 
   eliminarVehiculo(index: number) {
-    this.vehiculos.splice(index, 1);
-    localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));
-    this.mensajeError = ''; 
+    const v = this.vehiculos[index];
+    if (this.estaParqueado(v.placa)) {
+      alert('No puedes eliminar un vehículo que está parqueado actualmente.');
+      return;
+    }
+    
+    if (confirm(`¿Estás seguro de eliminar el vehículo ${v.placa}?`)) {
+      this.vehiculos.splice(index, 1);
+      localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));
+      this.cargarDatos();
+    }
   }
 
   limpiar() {

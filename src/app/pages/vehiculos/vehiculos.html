@@ -1,54 +1,61 @@
-<div class="container">
-  <div *ngIf="mensajeError" class="notificacion-toast">
-    <span class="icono">⚠️</span>
-    {{ mensajeError }}
-  </div>
-
-  <h2>🚗 Gestión de Vehículos</h2>
-
-  <div class="form">
-    <input type="text" placeholder="Placa" [(ngModel)]="placa">
-
-    <select [(ngModel)]="tipo">
-      <option value="">Seleccione tipo</option>
-      <option value="Carro">Carro</option>
-      <option value="Moto">Moto</option>
-    </select>
-
-    <button (click)="guardarVehiculo()">
-      {{ editandoIndex !== null ? 'Actualizar' : 'Agregar' }}
-    </button>
-  </div>
-
-  <div class="tabla-contenedor">
-    <table class="tabla-vehiculos">
-      <thead>
-        <tr>
-          <th>Placa</th>
-          <th>Tipo de Vehículo</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let v of vehiculos; let i = index">
-          <td class="placa-texto">{{ v.placa }}</td>
-          <td>
-            <span *ngIf="v.tipo === 'Carro'">🚗 Carro</span>
-            <span *ngIf="v.tipo === 'Moto'">🏍️ Moto</span>
-            <span *ngIf="v.tipo !== 'Carro' && v.tipo !== 'Moto'">{{ v.tipo }}</span>
-          </td>
-          <td>
-            <div class="acciones">
-              <button class="editar" (click)="editarVehiculo(i)">Editar</button>
-              <button class="borrar" (click)="eliminarVehiculo(i)">Borrar</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <div *ngIf="vehiculos.length === 0" style="padding: 20px; color: #666;">
-      No hay vehículos registrados.
+<div class="page-container">
+  
+  <header class="page-header">
+    <div class="header-icon">🚙</div>
+    <div class="header-info">
+      <h1>Gestión de Vehículos</h1>
+      <p>Registra y administra la flota de vehículos autorizados.</p>
     </div>
-  </div>
+  </header>
+
+  <!-- Formulario Superior -->
+  <section class="card form-card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Placa del Vehículo</label>
+        <input type="text" placeholder="Ej: ABC-123" [(ngModel)]="placa" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Tipo de Vehículo</label>
+        <select [(ngModel)]="tipo" class="form-control">
+          <option value="">Seleccione tipo</option>
+          <option value="Carro">Carro</option>
+          <option value="Moto">Moto</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" (click)="guardarVehiculo()">
+          {{ editandoIndex !== null ? 'Actualizar Vehículo' : 'Registrar Vehículo' }}
+        </button>
+        <button *ngIf="editandoIndex !== null" class="btn-ghost" (click)="limpiar()">Cancelar</button>
+      </div>
+    </div>
+    <div *ngIf="mensajeError" class="error-msg">⚠️ {{ mensajeError }}</div>
+  </section>
+
+  <!-- Grid de Vehículos -->
+  <main class="grid-layout">
+    <div *ngFor="let v of vehiculos; let i = index" class="card vehicle-card" [class.parked]="estaParqueado(v.placa)">
+      <div class="card-header">
+        <span class="vehicle-icon">{{ v.tipo === 'Carro' ? '🚗' : '🏍️' }}</span>
+        <span class="status-badge" [class.badge-parked]="estaParqueado(v.placa)">
+          {{ estaParqueado(v.placa) ? 'Parqueado' : 'Disponible' }}
+        </span>
+      </div>
+      <div class="card-body">
+        <h2 class="placa-display">{{ v.placa }}</h2>
+        <span class="type-label">{{ v.tipo }}</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-icon edit" (click)="editarVehiculo(i)" title="Editar">✏️</button>
+        <button class="btn-icon delete" (click)="eliminarVehiculo(i)" title="Eliminar">🗑️</button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="vehiculos.length === 0" class="empty-state-card">
+      <div class="empty-icon">📂</div>
+      <p>No hay vehículos registrados en el sistema.</p>
+    </div>
+  </main>
 </div>

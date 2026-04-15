@@ -10,10 +10,15 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', component: InicioComponent },
-  { path: 'vehiculos', component: VehiculosComponent },
-  { path: 'ingreso', component: IngresoComponent },
-  { path: 'salida', component: SalidaComponent },
-  { path: 'historial', component: HistorialComponent },
-  { path: 'configuracion', component: ConfiguracionComponent }
+  { 
+    path: '', 
+    component: InicioComponent,
+    children: [
+      { path: 'vehiculos', component: VehiculosComponent },
+      { path: 'ingreso', component: IngresoComponent },
+      { path: 'salida', component: SalidaComponent },
+      { path: 'historial', component: HistorialComponent },
+      { path: 'configuracion', component: ConfiguracionComponent }
+    ]
+  }
 ];

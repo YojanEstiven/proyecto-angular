@@ -12,15 +12,26 @@ import { Router } from '@angular/router';
 })
 export class ConfiguracionComponent {
   
-  
   precioPorMinuto: number = 0;
+  
+  // Extra settings for UI demo
+  notificaciones = true;
+  respaldoAutomatico = false;
+  moneda = 'USD';
 
   constructor(private router: Router) {
-    
+    this.cargarConfig();
+  }
+
+  cargarConfig() {
     const configGuardada = localStorage.getItem('config_precio');
     if (configGuardada) {
       this.precioPorMinuto = JSON.parse(configGuardada);
     }
+    
+    // Simular carga de otras configs
+    this.notificaciones = JSON.parse(localStorage.getItem('config_notif') || 'true');
+    this.moneda = localStorage.getItem('config_moneda') || 'USD';
   }
 
   guardarConfig() {
@@ -29,16 +40,15 @@ export class ConfiguracionComponent {
       return;
     }
 
-   
     localStorage.setItem('config_precio', JSON.stringify(this.precioPorMinuto));
+    localStorage.setItem('config_notif', JSON.stringify(this.notificaciones));
+    localStorage.setItem('config_moneda', this.moneda);
     
-    alert('Configuración guardada con éxito. Nuevo precio: $' + this.precioPorMinuto);
-    
-    
-    this.router.navigate(['/inicio']);
+    alert('Configuración guardada satisfactoriamente.');
+    this.router.navigate(['/']);
   }
 
   volver() {
-    this.router.navigate(['/inicio']);
+    this.router.navigate(['/']);
   }
 }

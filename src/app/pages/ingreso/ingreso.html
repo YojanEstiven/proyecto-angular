@@ -1,37 +1,85 @@
-<div class="container">
-
-  <h2>Registro de Ingreso</h2>
-
-  <div class="form">
-    <select [(ngModel)]="vehiculoSeleccionado">
-      <option value="">Seleccione vehículo</option>
-      <option *ngFor="let v of vehiculos" [value]="v.placa">
-        {{ v.placa }} - {{ v.tipo }}
-      </option>
-    </select>
-
-    <button (click)="registrarIngreso()">Registrar</button>
-  </div>
-
-  <div class="tabla-contenedor">
-    <table class="tabla-vehiculos">
-      <thead>
-        <tr>
-          <th>Placa</th>
-          <th>Fecha / Hora de Ingreso</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let i of ingresos">
-          <td class="placa-texto">{{ i.placa }}</td>
-          <td>{{ i.horaIngreso | date:"d 'de' MMMM, h:mm a" }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div *ngIf="ingresos.length === 0" class="mensaje-vacio">
-      No hay ingresos registrados actualmente.
+<div class="page-container">
+  
+  <header class="page-header">
+    <div class="header-icon">📥</div>
+    <div class="header-info">
+      <h1>Registro de Ingreso</h1>
+      <p>Busca un vehículo para autorizar su entrada al parqueadero.</p>
     </div>
-  </div>
+  </header>
 
+  <div class="layout-grid">
+    <!-- Formulario de Registro -->
+    <section class="card form-card">
+      <div class="form-group searchable-select">
+        <label>Buscar Vehículo (Placa)</label>
+        <div class="search-input-wrapper">
+          <input 
+            type="text" 
+            placeholder="Escribe la placa..." 
+            [(ngModel)]="terminoBusqueda"
+            (focus)="dropdownAbierto = true"
+            class="form-control">
+          
+          <button *ngIf="terminoBusqueda || vehiculoSeleccionado" 
+                  class="btn-clear" 
+                  (click)="limpiarSeleccion()"
+                  title="Limpiar búsqueda">✕</button>
+          
+          <span class="search-icon" *ngIf="!terminoBusqueda && !vehiculoSeleccionado">🔍</span>
+        </div>
+
+        <!-- Dropdown List -->
+        <div class="dropdown-list" *ngIf="dropdownAbierto">
+          <div *ngFor="let v of vehiculosFiltrados" 
+               (click)="seleccionarVehiculo(v)" 
+               class="dropdown-item">
+            <span class="item-placa">{{ v.placa }}</span>
+            <span class="item-tipo">{{ v.tipo }}</span>
+          </div>
+          
+          <!-- No results case -->
+          <div class="dropdown-empty" *ngIf="vehiculosFiltrados.length === 0">
+            <span>No se encontraron vehículos</span>
+            <small>Crea uno nuevo en el módulo de vehículos</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="selection-summary" [class.active]="vehiculoSeleccionado" *ngIf="vehiculoSeleccionado">
+        <div class="summary-icon">{{ vehiculoSeleccionado.tipo === 'Moto' ? '🏍️' : '🚗' }}</div>
+        <div class="summary-text">
+          <strong>{{ vehiculoSeleccionado.placa }}</strong>
+          <span>Listo para registrar</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" [disabled]="!vehiculoSeleccionado" (click)="registrarIngreso()">
+        Confirmar Ingreso
+      </button>
+    </section>
+
+    <!-- Historial Reciente de Ingresos -->
+    <section class="card list-card">
+      <h3>Ingresos Activos</h3>
+      <div class="ingresos-list">
+        <div *ngFor="let i of ingresos" class="ingreso-item">
+          <div class="item-avatar">
+             {{ i.tipo === 'Moto' ? '🏍️' : '🚗' }}
+          </div>
+          <div class="item-details">
+            <span class="placa">{{ i.placa }}</span>
+            <span class="fecha">{{ i.horaIngreso | date:"h:mm a, d MMM" }}</span>
+          </div>
+          <div class="item-status">
+            <span class="badge-status">En curso</span>
+          </div>
+        </div>
+
+        <div *ngIf="ingresos.length === 0" class="empty-state">
+           <p>No hay vehículos parqueados actualmente.</p>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
