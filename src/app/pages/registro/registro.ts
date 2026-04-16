@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./registro.css']
 })
 export class RegistroComponent {
+
   nombre = '';
   correo = '';
   password = '';
@@ -19,19 +20,24 @@ export class RegistroComponent {
   constructor(private router: Router) {}
 
   registrarUser() {
+
     if (!this.nombre || !this.correo || !this.password) {
       this.mensajeError = 'Todos los campos son obligatorios';
       return;
     }
 
-    // Mock registration logic: save to localStorage
-    const usuarios = JSON.parse(localStorage.getItem('parking_users') || '[]');
+    const data = localStorage.getItem('parking_users');
+    const usuarios = data ? JSON.parse(data) : [];
+
     
-    if (usuarios.find((u: any) => u.correo === this.correo)) {
+    const existe = usuarios.find((u: any) => u.correo === this.correo);
+
+    if (existe) {
       this.mensajeError = 'Este correo ya está registrado';
       return;
     }
 
+    
     usuarios.push({
       nombre: this.nombre,
       correo: this.correo,
@@ -39,8 +45,16 @@ export class RegistroComponent {
     });
 
     localStorage.setItem('parking_users', JSON.stringify(usuarios));
+
+    alert('Usuario registrado con éxito');
+
     
-    alert('Usuario registrado con éxito. Serás redirigido al login.');
+    this.nombre = '';
+    this.correo = '';
+    this.password = '';
+    this.mensajeError = '';
+
+    
     this.router.navigate(['/login']);
   }
 

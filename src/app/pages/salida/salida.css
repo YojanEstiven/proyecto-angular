@@ -174,7 +174,6 @@
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
 }
 
-/* PLACEHOLDER CARD */
 .placeholder-card {
   display: flex;
   flex-direction: column;
@@ -191,11 +190,84 @@
   opacity: 0.5;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.ticket {
+  margin: 30px auto;
+  width: 280px;
+  background: #fff;
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  color: #000;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-@media (max-width: 768px) {
-  .layout-grid { grid-template-columns: 1fr; }
+.ticket h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.ticket .sub {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.ticket p {
+  font-size: 13px;
+  margin: 5px 0;
+  text-align: left;
+}
+
+.ticket .line {
+  border-top: 1px dashed #000;
+  margin: 10px 0;
+}
+
+.ticket .total {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.ticket .gracias {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.btn-print {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+@media print {
+
+  body * {
+    display: none !important;
+  }
+
+  .ticket {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .ticket * {
+    display: block;
+  }
+
+  .btn-print {
+    display: none !important;
+  }
+
+}
+.ticket {
+  width: 280px;
+  margin: auto;
 }

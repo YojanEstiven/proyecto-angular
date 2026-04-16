@@ -9,21 +9,29 @@
   </header>
 
   <main class="settings-grid">
-    <!-- Sección de Tarifas -->
+
     <section class="settings-card">
       <h3 class="section-title">Parámetros Financieros</h3>
       
       <div class="form-group">
-        <label>Tarifa por Minuto</label>
+        <label>Tarifa Carro</label>
         <div class="input-with-symbol">
           <span class="symbol">$</span>
-          <input type="number" [(ngModel)]="precioPorMinuto" class="form-control">
+          <input type="number" [(ngModel)]="tarifaCarro" class="form-control">
         </div>
-        <p class="input-desc">Este valor se usará para calcular el cobro en el módulo de Salida.</p>
+        <p class="input-desc">Tarifa aplicada a vehículos tipo carro.</p>
+      </div>
+
+      <div class="form-group">
+        <label>Tarifa Moto</label>
+        <div class="input-with-symbol">
+          <span class="symbol">$</span>
+          <input type="number" [(ngModel)]="tarifaMoto" class="form-control">
+        </div>
+        <p class="input-desc">Tarifa aplicada a vehículos tipo moto.</p>
       </div>
     </section>
 
-    <!-- Sección de Preferencias -->
     <section class="settings-card">
       <h3 class="section-title">Preferencias de Interfaz</h3>
       
@@ -41,19 +49,28 @@
       <div class="setting-item">
         <div class="setting-info">
           <strong>Respaldo Automático</strong>
-          <span>Guardar datos en la nube periódicamente.</span>
+          <span>Guardar datos automáticamente.</span>
         </div>
         <label class="toggle">
           <input type="checkbox" [(ngModel)]="respaldoAutomatico">
           <span class="slider"></span>
         </label>
       </div>
+
+      <div class="form-group">
+        <label>Moneda</label>
+        <select [(ngModel)]="moneda" class="form-control">
+          <option value="COP">COP</option>
+        
+        </select>
+      </div>
     </section>
 
-    <!-- Botones de Acción -->
+    
     <div class="settings-actions">
       <button class="btn-cancel" (click)="volver()">Cancelar</button>
       <button class="btn-save" (click)="guardarConfig()">Guardar Cambios</button>
     </div>
+
   </main>
 </div>

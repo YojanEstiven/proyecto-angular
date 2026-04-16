@@ -9,7 +9,7 @@
   </header>
 
   <div class="layout-grid">
-    <!-- Selector de Vehículo -->
+
     <section class="card selection-card">
       <div class="form-group">
         <label>Seleccionar Vehículo en Parqueadero</label>
@@ -17,10 +17,13 @@
           class="form-control" 
           [(ngModel)]="vehiculoASalir" 
           (change)="seleccionarVehiculo(vehiculoASalir)">
+          
           <option value="">-- Selecciona una placa --</option>
+
           <option *ngFor="let i of ingresos" [value]="i.placa">
             {{ i.placa }}
           </option>
+
         </select>
       </div>
 
@@ -29,8 +32,8 @@
       </div>
     </section>
 
-    <!-- Resumen de Liquidación -->
     <section class="card summary-card" *ngIf="resumenSalida">
+      
       <div class="summary-header">
         <div class="plate-badge">{{ resumenSalida.placa }}</div>
         <div class="type-indicator">{{ resumenSalida.tipo }}</div>
@@ -41,10 +44,12 @@
           <span class="label">Ingreso:</span>
           <span class="value">{{ resumenSalida.ingreso | date:'h:mm a' }}</span>
         </div>
+
         <div class="detail-row">
-          <span class="label">Salida (Ahora):</span>
+          <span class="label">Salida:</span>
           <span class="value">{{ resumenSalida.salida | date:'h:mm a' }}</span>
         </div>
+
         <div class="detail-row highlight">
           <span class="label">Tiempo Total:</span>
           <span class="value">{{ resumenSalida.minutos }} minutos</span>
@@ -59,12 +64,44 @@
       <button class="btn-confirm-exit" (click)="registrarSalida()">
         Confirmar y Procesar Pago
       </button>
+
     </section>
 
-    <!-- Placeholder si no hay selección -->
     <section class="card placeholder-card" *ngIf="!resumenSalida && ingresos.length > 0">
       <div class="placeholder-icon">📋</div>
-      <p>Selecciona un vehículo de la izquierda para ver el resumen de cobro.</p>
+      <p>Selecciona un vehículo para ver el resumen.</p>
     </section>
+
   </div>
+</div>
+
+<div class="ticket" *ngIf="reciboGenerado">
+
+  <h2>🚗 PARQUEADERO</h2>
+  <p class="sub">Comprobante de Pago</p>
+
+  <div class="line"></div>
+
+  <p><strong>Placa:</strong> {{ reciboGenerado.placa }}</p>
+  <p><strong>Tipo:</strong> {{ reciboGenerado.tipo }}</p>
+
+  <div class="line"></div>
+
+  <p><strong>Ingreso:</strong> {{ reciboGenerado.ingreso | date:'short' }}</p>
+  <p><strong>Salida:</strong> {{ reciboGenerado.salida | date:'short' }}</p>
+
+  <div class="line"></div>
+
+  <p><strong>Tiempo:</strong> {{ reciboGenerado.tiempo }}</p>
+
+  <div class="line"></div>
+
+  <h3 class="total">TOTAL: ${{ reciboGenerado.pago }}</h3>
+
+  <div class="line"></div>
+
+  <p class="gracias">¡Gracias por su visita!</p>
+
+  <button class="btn-print" (click)="imprimirRecibo()">🖨️ Imprimir</button>
+
 </div>

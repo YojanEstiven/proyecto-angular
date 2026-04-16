@@ -1,9 +1,9 @@
-<!-- Navbar (Superior, estetica Moderna/Glass) -->
+
 <nav class="navbar" *ngIf="!isHome">
   <div class="nav-container">
     <div class="nav-logo" (click)="navigate('/')">
       <span class="logo-icon">🅿️</span>
-      <span class="logo-text">SmartPark</span>
+      <span class="logo-text">PARQUEA</span>
     </div>
     
     <div class="nav-menu">
@@ -64,11 +64,10 @@
     </main>
 
     <footer class="home-footer">
-      <p>Diseñado para eficiencia operativa &bull; 2026</p>
+      <p>Sistema de Parqueadero &bull; 2026</p>
     </footer>
   </div>
 
-  <!-- VISTA DE MÓDULO (CONTENIDO DINÁMICO) -->
   <div class="module-outlet" *ngIf="!isHome">
     <div class="outlet-wrapper">
       <router-outlet></router-outlet>

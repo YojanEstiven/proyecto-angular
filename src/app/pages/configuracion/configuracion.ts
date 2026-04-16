@@ -12,9 +12,10 @@ import { Router } from '@angular/router';
 })
 export class ConfiguracionComponent {
   
-  precioPorMinuto: number = 0;
   
-  // Extra settings for UI demo
+  tarifaCarro: number = 0;
+  tarifaMoto: number = 0;
+
   notificaciones = true;
   respaldoAutomatico = false;
   moneda = 'USD';
@@ -24,27 +25,29 @@ export class ConfiguracionComponent {
   }
 
   cargarConfig() {
-    const configGuardada = localStorage.getItem('config_precio');
-    if (configGuardada) {
-      this.precioPorMinuto = JSON.parse(configGuardada);
-    }
-    
-    // Simular carga de otras configs
+
+    this.tarifaCarro = JSON.parse(localStorage.getItem('config_carro') || '2000');
+    this.tarifaMoto = JSON.parse(localStorage.getItem('config_moto') || '1000');
+
     this.notificaciones = JSON.parse(localStorage.getItem('config_notif') || 'true');
     this.moneda = localStorage.getItem('config_moneda') || 'USD';
   }
 
   guardarConfig() {
-    if (this.precioPorMinuto < 0) {
-      alert('El precio no puede ser negativo');
+
+    if (this.tarifaCarro < 0 || this.tarifaMoto < 0) {
+      alert('Las tarifas no pueden ser negativas');
       return;
     }
 
-    localStorage.setItem('config_precio', JSON.stringify(this.precioPorMinuto));
+    localStorage.setItem('config_carro', JSON.stringify(this.tarifaCarro));
+    localStorage.setItem('config_moto', JSON.stringify(this.tarifaMoto));
+
     localStorage.setItem('config_notif', JSON.stringify(this.notificaciones));
     localStorage.setItem('config_moneda', this.moneda);
-    
+
     alert('Configuración guardada satisfactoriamente.');
+
     this.router.navigate(['/']);
   }
 

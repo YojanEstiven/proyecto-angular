@@ -11,12 +11,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./salida.css']
 })
 export class SalidaComponent {
+
   ingresos: any[] = [];
   vehiculoASalir = '';
-  tarifaPorMinuto = 0;
-  
-  // New state for summary
+
+  tarifaCarro = 0;
+  tarifaMoto = 0;
+
   resumenSalida: any = null;
+
+  
+  reciboGenerado: any = null;
 
   constructor(private router: Router) {
     this.cargarDatos();
@@ -24,12 +29,16 @@ export class SalidaComponent {
 
   cargarDatos() {
     this.ingresos = JSON.parse(localStorage.getItem('ingresos') || '[]');
-    this.tarifaPorMinuto = JSON.parse(localStorage.getItem('config_precio') || '0');
+
+    this.tarifaCarro = JSON.parse(localStorage.getItem('config_carro') || '2000');
+    this.tarifaMoto = JSON.parse(localStorage.getItem('config_moto') || '1000');
   }
 
   seleccionarVehiculo(placa: string) {
     this.vehiculoASalir = placa;
+
     const v = this.ingresos.find(item => item.placa === placa);
+
     if (v) {
       this.calcularResumen(v);
     } else {
@@ -38,18 +47,25 @@ export class SalidaComponent {
   }
 
   calcularResumen(v: any) {
+
     const horaSalida = new Date();
     const fechaIngreso = new Date(v.horaIngreso);
+
     const diferenciaMs = horaSalida.getTime() - fechaIngreso.getTime();
-    
+
     let minutos = Math.ceil(diferenciaMs / (1000 * 60));
     if (minutos <= 0) minutos = 1;
 
-    const totalPagar = minutos * this.tarifaPorMinuto;
+    const tarifa = v.tipo === 'Carro'
+      ? this.tarifaCarro
+      : this.tarifaMoto;
+
+    const totalPagar = minutos * tarifa;
 
     this.resumenSalida = {
       placa: v.placa,
       tipo: v.tipo || 'Vehículo',
+      tarifa: tarifa,
       ingreso: v.horaIngreso,
       salida: horaSalida.toISOString(),
       minutos: minutos,
@@ -58,28 +74,41 @@ export class SalidaComponent {
   }
 
   registrarSalida() {
+
     if (!this.resumenSalida) return;
 
     if (confirm(`¿Confirmas la salida del vehículo ${this.resumenSalida.placa} por un total de $${this.resumenSalida.total}?`)) {
+
       const nuevoHistorial = {
         placa: this.resumenSalida.placa,
+        tipo: this.resumenSalida.tipo,
         ingreso: this.resumenSalida.ingreso,
         salida: this.resumenSalida.salida,
         tiempo: this.resumenSalida.minutos + ' min',
         pago: this.resumenSalida.total
       };
 
-      // Quitar de ingresos
-      const ingresosActualizados = this.ingresos.filter(item => item.placa !== this.resumenSalida.placa);
+      
+      this.reciboGenerado = nuevoHistorial;
+
+     
+      const ingresosActualizados = this.ingresos.filter(
+        item => item.placa !== this.resumenSalida.placa
+      );
       localStorage.setItem('ingresos', JSON.stringify(ingresosActualizados));
 
-      // Guardar en historial
       const historial = JSON.parse(localStorage.getItem('historial') || '[]');
       historial.push(nuevoHistorial);
       localStorage.setItem('historial', JSON.stringify(historial));
 
       alert('Salida procesada correctamente.');
-      this.router.navigate(['/']);
+
+    
     }
+  }
+
+  
+  imprimirRecibo() {
+    window.print();
   }
 }
