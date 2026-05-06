@@ -7,20 +7,25 @@ import { HistorialComponent} from './pages/historial/historial';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion';
 import { RegistroComponent } from './pages/registro/registro';
 import { Routes } from '@angular/router';
+import { MapaComponent } from './pages/mapa/mapa';
+
 
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { 
+    
     path: '', 
     component: InicioComponent,
+    
     children: [
       { path: 'vehiculos', component: VehiculosComponent },
       { path: 'ingreso', component: IngresoComponent },
       { path: 'salida', component: SalidaComponent },
       { path: 'historial', component: HistorialComponent },
-      { path: 'configuracion', component: ConfiguracionComponent }
+      { path: 'configuracion', component: ConfiguracionComponent },
+      { path: 'mapa', component: MapaComponent }
     ]
   }
 ];

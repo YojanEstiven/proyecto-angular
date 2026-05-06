@@ -1,11 +1,35 @@
-
 <nav class="navbar" *ngIf="!isHome">
   <div class="nav-container">
+
+    <!-- LOGO -->
     <div class="nav-logo" (click)="navigate('/')">
       <span class="logo-icon">🅿️</span>
-      <span class="logo-text">PARQUEA</span>
+      <span class="logo-text">ParkYepz</span>
     </div>
-    
+
+    <div class="dashboard-container">
+
+      <div class="dashboard-card">
+        <h4> Carros</h4>
+        <p>Ocupados: {{ carrosOcupados }}</p>
+        <p [ngClass]="{ 'text-danger': carrosDisponibles === 0, 'text-success': carrosDisponibles > 0 }">
+          Disponibles: {{ carrosDisponibles }}
+        </p>
+        <small>Total: {{ carrosCapacidad }}</small>
+      </div>
+
+      <div class="dashboard-card">
+        <h4> Motos</h4>
+        <p>Ocupados: {{ motosOcupadas }}</p>
+        <p [ngClass]="{ 'text-danger': motosDisponibles === 0, 'text-success': motosDisponibles > 0 }">
+          Disponibles: {{ motosDisponibles }}
+        </p>
+        <small>Total: {{ motosCapacidad }}</small>
+      </div>
+
+    </div>
+
+    <!-- MENÚ -->
     <div class="nav-menu">
       <a *ngFor="let item of navItems" 
          [routerLink]="item.path" 
@@ -16,16 +40,18 @@
       </a>
     </div>
 
+    <!-- ACCIONES -->
     <div class="nav-actions">
       <button class="logout-btn-nav" (click)="logout()">Cerrar Sesión</button>
     </div>
+
   </div>
 </nav>
 
 <div class="main-wrapper" [class.active-module]="!isHome">
   
-  <!-- VISTA DE INICIO (CARDS) -->
   <div class="home-container" *ngIf="isHome">
+
     <div class="top-header">
       <button class="logout-pill" (click)="logout()">Cerrar Sesión</button>
     </div>
@@ -40,34 +66,46 @@
 
     <main class="grid-container">
       <div class="cards-grid">
+
         <div *ngFor="let item of navItems" 
              class="card-modern" 
              [ngClass]="item.iconClass"
              (click)="navigate(item.path)">
+
           <div class="card-bg-decoration"></div>
+
           <div class="card-icon-wrapper">
             {{item.icon}}
           </div>
+
           <div class="card-body">
             <h3>{{item.label}}</h3>
             <p>{{item.desc}}</p>
-            <span *ngIf="item.badge" class="status-badge" [ngClass]="item.badge === 'Disponible' ? 'status-ok' : 'status-busy'">
+
+            <span *ngIf="item.badge" 
+                  class="status-badge"
+                  [ngClass]="item.badge === 'Disponible' ? 'status-ok' : 'status-busy'">
               {{item.badge}}
             </span>
           </div>
+
           <div class="card-footer">
             <span>Acceder</span>
             <span class="arrow-icon">→</span>
           </div>
+
         </div>
+
       </div>
     </main>
 
     <footer class="home-footer">
-      <p>Sistema de Parqueadero &bull; 2026</p>
+      <p>Sistema de Parqueadero • 2026</p>
     </footer>
+
   </div>
 
+  
   <div class="module-outlet" *ngIf="!isHome">
     <div class="outlet-wrapper">
       <router-outlet></router-outlet>

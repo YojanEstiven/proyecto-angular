@@ -74,6 +74,19 @@ export class SalidaComponent {
   }
 
   registrarSalida() {
+    let espacios = JSON.parse(localStorage.getItem('espacios') || '[]');
+
+
+const espacio = espacios.find(
+  (e: any) => e.placa === this.resumenSalida.placa
+);
+
+if (espacio) {
+  espacio.ocupado = false;
+  espacio.placa = null;
+}
+
+localStorage.setItem('espacios', JSON.stringify(espacios));
 
     if (!this.resumenSalida) return;
 
@@ -96,6 +109,7 @@ export class SalidaComponent {
         item => item.placa !== this.resumenSalida.placa
       );
       localStorage.setItem('ingresos', JSON.stringify(ingresosActualizados));
+      window.dispatchEvent(new Event('actualizarDashboard'));
 
       const historial = JSON.parse(localStorage.getItem('historial') || '[]');
       historial.push(nuevoHistorial);

@@ -15,6 +15,7 @@ export class ConfiguracionComponent {
   
   tarifaCarro: number = 0;
   tarifaMoto: number = 0;
+  capacidadMaxima: number = 20;
 
   notificaciones = true;
   respaldoAutomatico = false;
@@ -28,6 +29,7 @@ export class ConfiguracionComponent {
 
     this.tarifaCarro = JSON.parse(localStorage.getItem('config_carro') || '2000');
     this.tarifaMoto = JSON.parse(localStorage.getItem('config_moto') || '1000');
+    this.capacidadMaxima = JSON.parse(localStorage.getItem('config_capacidad') || '20');
 
     this.notificaciones = JSON.parse(localStorage.getItem('config_notif') || 'true');
     this.moneda = localStorage.getItem('config_moneda') || 'USD';
@@ -42,6 +44,7 @@ export class ConfiguracionComponent {
 
     localStorage.setItem('config_carro', JSON.stringify(this.tarifaCarro));
     localStorage.setItem('config_moto', JSON.stringify(this.tarifaMoto));
+    localStorage.setItem('config_capacidad', JSON.stringify(this.capacidadMaxima));
 
     localStorage.setItem('config_notif', JSON.stringify(this.notificaciones));
     localStorage.setItem('config_moneda', this.moneda);

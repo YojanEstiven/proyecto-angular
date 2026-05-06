@@ -1,0 +1,60 @@
+<div class="mapa-container">
+
+  <header class="mapa-header">
+    <h1>Mapa del Parqueadero</h1>
+    <p>Visualiza los espacios ocupados y disponibles en tiempo real.</p>
+  </header>
+
+  
+  <section class="zona">
+    <h2> Zona Carros</h2>
+
+    <div class="grid">
+      <div *ngFor="let e of carros"
+           class="espacio"
+           [ngClass]="e.ocupado ? 'ocupado' : 'disponible'">
+
+        
+        <ng-container *ngIf="e.ocupado; else libreCarro">
+          <div class="placa">{{ e.placa }}</div>
+          <div class="tipo"> Carro</div>
+          <div class="numero">#{{ e.id }}</div>
+        </ng-container>
+
+       
+        <ng-template #libreCarro>
+          <div class="numero">#{{ e.id }}</div>
+          <div class="libre-text">Disponible</div>
+        </ng-template>
+
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="zona">
+    <h2> Zona Motos</h2>
+
+    <div class="grid">
+      <div *ngFor="let e of motos"
+           class="espacio"
+           [ngClass]="e.ocupado ? 'ocupado' : 'disponible'">
+
+       
+        <ng-container *ngIf="e.ocupado; else libreMoto">
+          <div class="placa">{{ e.placa }}</div>
+          <div class="tipo"> Moto</div>
+          <div class="numero">#{{ e.id }}</div>
+        </ng-container>
+
+        
+        <ng-template #libreMoto>
+          <div class="numero">#{{ e.id }}</div>
+          <div class="libre-text">Disponible</div>
+        </ng-template>
+
+      </div>
+    </div>
+  </section>
+
+</div>
