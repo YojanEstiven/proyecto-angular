@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, afterNextRender, inject } from '@angular/core';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../services/storage.service';
+
+import { Navbar } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, Navbar],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
 })
 export class InicioComponent {
+
+  private storageService = inject(StorageService);
 
   navItems = [
     { label: 'Vehículos', icon: '🚙', iconClass: 'icon-blue', path: '/vehiculos', desc: 'Gestionar flota' },
@@ -31,21 +36,23 @@ export class InicioComponent {
   motosDisponibles = 0;
 
   constructor(private router: Router) {
-    this.cargarEstado();
-    window.addEventListener('actualizarDashboard', () => {
-    this.cargarEstado();
-  });
-
     
+    afterNextRender(() => {
+      this.cargarEstado();
+      
+      window.addEventListener('actualizarDashboard', () => {
+        this.cargarEstado();
+      });
+    });
   }
 
-   ngOnInit() {
-    this.cargarEstado();
+  ngOnInit() {
+    // Initial state handled by afterNextRender for browser
   }
 
   cargarEstado() {
 
-    const espacios = JSON.parse(localStorage.getItem('espacios') || '[]');
+    const espacios = JSON.parse(this.storageService.getItem('espacios') || '[]');
 
     // CARROS
     const carros = espacios.filter((e: any) => e.tipo === 'Carro');
@@ -71,7 +78,7 @@ export class InicioComponent {
 
   // cerrar sesión
   logout() {
-    localStorage.removeItem('login');
+    this.storageService.removeItem('login');
     this.router.navigate(['/login']);
   }
 

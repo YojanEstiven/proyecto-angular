@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-registro',
@@ -17,7 +18,8 @@ export class RegistroComponent {
   password = '';
   mensajeError = '';
 
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private storageService = inject(StorageService);
 
   registrarUser() {
 
@@ -26,7 +28,7 @@ export class RegistroComponent {
       return;
     }
 
-    const data = localStorage.getItem('parking_users');
+    const data = this.storageService.getItem('parking_users');
     const usuarios = data ? JSON.parse(data) : [];
 
     
@@ -44,7 +46,7 @@ export class RegistroComponent {
       password: this.password
     });
 
-    localStorage.setItem('parking_users', JSON.stringify(usuarios));
+    this.storageService.setItem('parking_users', JSON.stringify(usuarios));
 
     alert('Usuario registrado con éxito');
 

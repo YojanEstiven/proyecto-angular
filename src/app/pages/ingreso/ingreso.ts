@@ -1,7 +1,8 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, afterNextRender } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-ingreso',
@@ -20,22 +21,27 @@ export class IngresoComponent {
   vehiculoSeleccionado: any = null;
   dropdownAbierto = false;
 
-  constructor(private router: Router, private eRef: ElementRef) {
+  private router = inject(Router);
+  private eRef = inject(ElementRef);
+  private storageService = inject(StorageService);
 
-    //  cargar vehículos
-    const dataVehiculos = localStorage.getItem('vehiculos');
-    if (dataVehiculos) {
-      this.vehiculos = JSON.parse(dataVehiculos);
-    }
+  constructor() {
+    afterNextRender(() => {
+      //  cargar vehículos
+      const dataVehiculos = this.storageService.getItem('vehiculos');
+      if (dataVehiculos) {
+        this.vehiculos = JSON.parse(dataVehiculos);
+      }
 
-    //  cargar ingresos
-    const dataIngresos = localStorage.getItem('ingresos');
-    if (dataIngresos) {
-      this.ingresos = JSON.parse(dataIngresos);
-    }
+      //  cargar ingresos
+      const dataIngresos = this.storageService.getItem('ingresos');
+      if (dataIngresos) {
+        this.ingresos = JSON.parse(dataIngresos);
+      }
 
-    //  capacidad
-    this.capacidadMaxima = JSON.parse(localStorage.getItem('config_capacidad') || '20');
+      //  capacidad
+      this.capacidadMaxima = JSON.parse(this.storageService.getItem('config_capacidad') || '20');
+    });
   }
 
   // cerrar dropdown al hacer click fuera
@@ -94,7 +100,7 @@ export class IngresoComponent {
     }
 
     //  cargar espacios
-    let espacios = JSON.parse(localStorage.getItem('espacios') || '[]');
+    let espacios = JSON.parse(this.storageService.getItem('espacios') || '[]');
 
     //  buscar espacio libre según tipo
     const espacioLibre = espacios.find(
@@ -121,9 +127,9 @@ export class IngresoComponent {
 
     // guardar datos
     this.ingresos.push(ingreso);
-    localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
+    this.storageService.setItem('ingresos', JSON.stringify(this.ingresos));
     window.dispatchEvent(new Event('actualizarDashboard'));
-    localStorage.setItem('espacios', JSON.stringify(espacios));
+    this.storageService.setItem('espacios', JSON.stringify(espacios));
 
     alert(`Vehículo ingresado en el espacio #${espacioLibre.id}`);
 

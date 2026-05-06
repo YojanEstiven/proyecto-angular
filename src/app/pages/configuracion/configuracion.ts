@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, afterNextRender } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-configuracion',
@@ -21,18 +22,23 @@ export class ConfiguracionComponent {
   respaldoAutomatico = false;
   moneda = 'USD';
 
-  constructor(private router: Router) {
-    this.cargarConfig();
+  private router = inject(Router);
+  private storageService = inject(StorageService);
+
+  constructor() {
+    afterNextRender(() => {
+      this.cargarConfig();
+    });
   }
 
   cargarConfig() {
 
-    this.tarifaCarro = JSON.parse(localStorage.getItem('config_carro') || '2000');
-    this.tarifaMoto = JSON.parse(localStorage.getItem('config_moto') || '1000');
-    this.capacidadMaxima = JSON.parse(localStorage.getItem('config_capacidad') || '20');
+    this.tarifaCarro = JSON.parse(this.storageService.getItem('config_carro') || '2000');
+    this.tarifaMoto = JSON.parse(this.storageService.getItem('config_moto') || '1000');
+    this.capacidadMaxima = JSON.parse(this.storageService.getItem('config_capacidad') || '20');
 
-    this.notificaciones = JSON.parse(localStorage.getItem('config_notif') || 'true');
-    this.moneda = localStorage.getItem('config_moneda') || 'USD';
+    this.notificaciones = JSON.parse(this.storageService.getItem('config_notif') || 'true');
+    this.moneda = this.storageService.getItem('config_moneda') || 'USD';
   }
 
   guardarConfig() {
@@ -42,12 +48,12 @@ export class ConfiguracionComponent {
       return;
     }
 
-    localStorage.setItem('config_carro', JSON.stringify(this.tarifaCarro));
-    localStorage.setItem('config_moto', JSON.stringify(this.tarifaMoto));
-    localStorage.setItem('config_capacidad', JSON.stringify(this.capacidadMaxima));
+    this.storageService.setItem('config_carro', JSON.stringify(this.tarifaCarro));
+    this.storageService.setItem('config_moto', JSON.stringify(this.tarifaMoto));
+    this.storageService.setItem('config_capacidad', JSON.stringify(this.capacidadMaxima));
 
-    localStorage.setItem('config_notif', JSON.stringify(this.notificaciones));
-    localStorage.setItem('config_moneda', this.moneda);
+    this.storageService.setItem('config_notif', JSON.stringify(this.notificaciones));
+    this.storageService.setItem('config_moneda', this.moneda);
 
     alert('Configuración guardada satisfactoriamente.');
 

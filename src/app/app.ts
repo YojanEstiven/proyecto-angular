@@ -1,7 +1,6 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, afterNextRender } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
-import { PLATFORM_ID } from '@angular/core';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +14,13 @@ export class App {
   protected readonly title = signal('proyecto-YojanEstiven-angular');
 
   private router = inject(Router);
-  private platformId = inject(PLATFORM_ID);
+  private storageService = inject(StorageService);
 
   constructor() {
-  
-    if (isPlatformBrowser(this.platformId)) {
-      if (!localStorage.getItem('login')) {
+    afterNextRender(() => {
+      if (!this.storageService.getItem('login')) {
         this.router.navigate(['/login']);
       }
-    }
+    });
   }
 }

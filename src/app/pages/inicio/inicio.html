@@ -1,52 +1,29 @@
-<nav class="navbar" *ngIf="!isHome">
-  <div class="nav-container">
+<app-navbar *ngIf="!isHome"></app-navbar>
 
-    <!-- LOGO -->
-    <div class="nav-logo" (click)="navigate('/')">
-      <span class="logo-icon">🅿️</span>
-      <span class="logo-text">ParkYepz</span>
-    </div>
-
-    <div class="dashboard-container">
-
-      <div class="dashboard-card">
-        <h4> Carros</h4>
-        <p>Ocupados: {{ carrosOcupados }}</p>
-        <p [ngClass]="{ 'text-danger': carrosDisponibles === 0, 'text-success': carrosDisponibles > 0 }">
-          Disponibles: {{ carrosDisponibles }}
-        </p>
-        <small>Total: {{ carrosCapacidad }}</small>
-      </div>
-
-      <div class="dashboard-card">
-        <h4> Motos</h4>
-        <p>Ocupados: {{ motosOcupadas }}</p>
-        <p [ngClass]="{ 'text-danger': motosDisponibles === 0, 'text-success': motosDisponibles > 0 }">
-          Disponibles: {{ motosDisponibles }}
-        </p>
-        <small>Total: {{ motosCapacidad }}</small>
-      </div>
-
-    </div>
-
-    <!-- MENÚ -->
-    <div class="nav-menu">
-      <a *ngFor="let item of navItems" 
-         [routerLink]="item.path" 
-         routerLinkActive="active" 
-         class="nav-link">
-        <span class="link-icon">{{item.icon}}</span>
-        <span class="link-text">{{item.label}}</span>
-      </a>
-    </div>
-
-    <!-- ACCIONES -->
-    <div class="nav-actions">
-      <button class="logout-btn-nav" (click)="logout()">Cerrar Sesión</button>
-    </div>
-
+<div class="top-stats-bar" *ngIf="!isHome">
+  <div class="nav-logo" (click)="navigate('/')">
+    <span class="logo-icon">🅿️</span>
+    <span class="logo-text">ParkYepz</span>
   </div>
-</nav>
+
+  <div class="dashboard-container">
+    <div class="dashboard-card">
+      <h4> Carros</h4>
+      <p>Ocupados: {{ carrosOcupados }}</p>
+      <p [ngClass]="{ 'text-danger': carrosDisponibles === 0, 'text-success': carrosDisponibles > 0 }">
+        Disponibles: {{ carrosDisponibles }}
+      </p>
+    </div>
+
+    <div class="dashboard-card">
+      <h4> Motos</h4>
+      <p>Ocupados: {{ motosOcupadas }}</p>
+      <p [ngClass]="{ 'text-danger': motosDisponibles === 0, 'text-success': motosDisponibles > 0 }">
+        Disponibles: {{ motosDisponibles }}
+      </p>
+    </div>
+  </div>
+</div>
 
 <div class="main-wrapper" [class.active-module]="!isHome">
   

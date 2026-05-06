@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, afterNextRender } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-salida',
@@ -23,15 +24,20 @@ export class SalidaComponent {
   
   reciboGenerado: any = null;
 
-  constructor(private router: Router) {
-    this.cargarDatos();
+  private router = inject(Router);
+  private storageService = inject(StorageService);
+
+  constructor() {
+    afterNextRender(() => {
+      this.cargarDatos();
+    });
   }
 
   cargarDatos() {
-    this.ingresos = JSON.parse(localStorage.getItem('ingresos') || '[]');
+    this.ingresos = JSON.parse(this.storageService.getItem('ingresos') || '[]');
 
-    this.tarifaCarro = JSON.parse(localStorage.getItem('config_carro') || '2000');
-    this.tarifaMoto = JSON.parse(localStorage.getItem('config_moto') || '1000');
+    this.tarifaCarro = JSON.parse(this.storageService.getItem('config_carro') || '2000');
+    this.tarifaMoto = JSON.parse(this.storageService.getItem('config_moto') || '1000');
   }
 
   seleccionarVehiculo(placa: string) {
@@ -74,7 +80,7 @@ export class SalidaComponent {
   }
 
   registrarSalida() {
-    let espacios = JSON.parse(localStorage.getItem('espacios') || '[]');
+    let espacios = JSON.parse(this.storageService.getItem('espacios') || '[]');
 
 
 const espacio = espacios.find(
@@ -86,7 +92,7 @@ if (espacio) {
   espacio.placa = null;
 }
 
-localStorage.setItem('espacios', JSON.stringify(espacios));
+    this.storageService.setItem('espacios', JSON.stringify(espacios));
 
     if (!this.resumenSalida) return;
 
@@ -108,12 +114,12 @@ localStorage.setItem('espacios', JSON.stringify(espacios));
       const ingresosActualizados = this.ingresos.filter(
         item => item.placa !== this.resumenSalida.placa
       );
-      localStorage.setItem('ingresos', JSON.stringify(ingresosActualizados));
+      this.storageService.setItem('ingresos', JSON.stringify(ingresosActualizados));
       window.dispatchEvent(new Event('actualizarDashboard'));
 
-      const historial = JSON.parse(localStorage.getItem('historial') || '[]');
+      const historial = JSON.parse(this.storageService.getItem('historial') || '[]');
       historial.push(nuevoHistorial);
-      localStorage.setItem('historial', JSON.stringify(historial));
+      this.storageService.setItem('historial', JSON.stringify(historial));
 
       alert('Salida procesada correctamente.');
 

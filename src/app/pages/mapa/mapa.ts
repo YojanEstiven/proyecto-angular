@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, afterNextRender } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-mapa',
@@ -8,16 +9,19 @@ import { CommonModule } from '@angular/common';
   templateUrl: './mapa.html',
   styleUrls: ['./mapa.css']
 })
-export class MapaComponent implements OnInit {
+export class MapaComponent {
 
   espacios: any[] = [];
+  private storageService = inject(StorageService);
 
-  ngOnInit() {
-    this.cargarEspacios();
+  constructor() {
+    afterNextRender(() => {
+      this.cargarEspacios();
+    });
   }
 
   cargarEspacios() {
-    const data = localStorage.getItem('espacios');
+    const data = this.storageService.getItem('espacios');
 
     if (data) {
       this.espacios = JSON.parse(data);
@@ -49,7 +53,7 @@ export class MapaComponent implements OnInit {
       });
     }
 
-    localStorage.setItem('espacios', JSON.stringify(this.espacios));
+    this.storageService.setItem('espacios', JSON.stringify(this.espacios));
   }
 
   get carros() {

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, afterNextRender, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-vehiculos',
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class VehiculosComponent {
 
+  private storageService = inject(StorageService);
   placa = '';
   tipo = '';
   vehiculos: any[] = [];
@@ -19,12 +21,14 @@ export class VehiculosComponent {
   mensajeError = '';
 
   constructor() {
-    this.cargarDatos();
+    afterNextRender(() => {
+      this.cargarDatos();
+    });
   }
 
   cargarDatos() {
-    this.vehiculos = JSON.parse(localStorage.getItem('vehiculos') || '[]');
-    this.ingresosActivos = JSON.parse(localStorage.getItem('ingresos') || '[]');
+    this.vehiculos = JSON.parse(this.storageService.getItem('vehiculos') || '[]');
+    this.ingresosActivos = JSON.parse(this.storageService.getItem('ingresos') || '[]');
   }
 
   estaParqueado(placa: string): boolean {
@@ -57,7 +61,7 @@ export class VehiculosComponent {
       });
     }
 
-    localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));
+    this.storageService.setItem('vehiculos', JSON.stringify(this.vehiculos));
     this.limpiar();
     this.cargarDatos(); // Refresh list
   }
@@ -78,7 +82,7 @@ export class VehiculosComponent {
     
     if (confirm(`¿Estás seguro de eliminar el vehículo ${v.placa}?`)) {
       this.vehiculos.splice(index, 1);
-      localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));
+      this.storageService.setItem('vehiculos', JSON.stringify(this.vehiculos));
       this.cargarDatos();
     }
   }

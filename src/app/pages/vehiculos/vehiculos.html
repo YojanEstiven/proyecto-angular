@@ -1,5 +1,5 @@
 <div class="page-container">
-  
+
   <header class="page-header">
     <div class="header-icon">🚙</div>
     <div class="header-info">
@@ -13,7 +13,8 @@
     <div class="form-grid">
       <div class="form-group">
         <label>Placa del Vehículo</label>
-        <input type="text" placeholder="Ej: ABC-123" [(ngModel)]="placa" class="form-control">
+        <input type="text" placeholder="Ej: ABC-123" [(ngModel)]="placa" class="form-control" pattern="^\S+$"
+          minlength="5" maxlength="6">
       </div>
       <div class="form-group">
         <label>Tipo de Vehículo</label>

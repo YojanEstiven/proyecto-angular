@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +17,12 @@ export class LoginComponent {
   password = '';
   error = false;
 
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private storageService = inject(StorageService);
 
   login() {
     if (this.usuario === 'yojan' && this.password === '1234') {
-      localStorage.setItem('login', 'true');
+      this.storageService.setItem('login', 'true');
       
       this.router.navigate(['/']); 
     } else {

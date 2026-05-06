@@ -1,1 +1,21 @@
-<p>navbar works!</p>
+<nav class="floating-nav">
+  <div class="nav-wrapper">
+    <!-- Main Menu -->
+    <div class="nav-items">
+      <a *ngFor="let item of navItems" [routerLink]="item.path" routerLinkActive="active" class="nav-item-link"
+        [title]="item.label">
+        <span class="item-icon">{{item.icon}}</span>
+        <span class="item-label">{{item.label}}</span>
+      </a>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <button class="action-btn logout" (click)="logout()" title="Cerrar Sesión">
+        <span class="action-icon">🚪</span>
+      </button>
+    </div>
+  </div>
+</nav>
