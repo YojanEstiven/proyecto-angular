@@ -5,33 +5,45 @@
     <p>Visualiza los espacios ocupados y disponibles en tiempo real.</p>
   </header>
 
-  
+  <!-- ================= CARROS ================= -->
   <section class="zona">
-    <h2> Zona Carros</h2>
+    <h2>Zona Carros</h2>
 
     <div class="grid">
       <div *ngFor="let e of carros"
            class="espacio"
            [ngClass]="e.ocupado ? 'ocupado' : 'disponible'">
 
-        
+        <!-- OCUPADO -->
         <ng-container *ngIf="e.ocupado; else libreCarro">
-          <div class="placa">{{ e.placa }}</div>
-          <div class="tipo"> Carro</div>
-          <div class="numero">#{{ e.id }}</div>
+
+          <div class="espacio-header">
+            <span class="numero">C{{ e.id }}</span>
+          </div>
+
+          <div class="espacio-body">
+            <div class="placa">{{ e.placa }}</div>
+            <div class="tipo">Carro</div>
+          </div>
+
         </ng-container>
 
-       
+        <!-- DISPONIBLE -->
         <ng-template #libreCarro>
-          <div class="numero">#{{ e.id }}</div>
-          <div class="libre-text">Disponible</div>
+          <div class="espacio-header">
+            <span class="numero">C{{ e.id }}</span>
+          </div>
+
+          <div class="espacio-body">
+            <div class="libre-text">Disponible</div>
+          </div>
         </ng-template>
 
       </div>
     </div>
   </section>
 
-  
+  <!-- == MOTOS  -->
   <section class="zona">
     <h2> Zona Motos</h2>
 
@@ -40,17 +52,29 @@
            class="espacio"
            [ngClass]="e.ocupado ? 'ocupado' : 'disponible'">
 
-       
+        <!-- OCUPADO -->
         <ng-container *ngIf="e.ocupado; else libreMoto">
-          <div class="placa">{{ e.placa }}</div>
-          <div class="tipo"> Moto</div>
-          <div class="numero">#{{ e.id }}</div>
+
+          <div class="espacio-header">
+            <span class="numero">M{{ e.id }}</span>
+          </div>
+
+          <div class="espacio-body">
+            <div class="placa">{{ e.placa }}</div>
+            <div class="tipo">Moto</div>
+          </div>
+
         </ng-container>
 
-        
+        <!-- DISPONIBLE -->
         <ng-template #libreMoto>
-          <div class="numero">#{{ e.id }}</div>
-          <div class="libre-text">Disponible</div>
+          <div class="espacio-header">
+            <span class="numero">M{{ e.id }}</span>
+          </div>
+
+          <div class="espacio-body">
+            <div class="libre-text">Disponible</div>
+          </div>
         </ng-template>
 
       </div>

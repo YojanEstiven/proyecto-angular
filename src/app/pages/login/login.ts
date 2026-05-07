@@ -21,11 +21,42 @@ export class LoginComponent {
   private storageService = inject(StorageService);
 
   login() {
-    if (this.usuario === 'yojan' && this.password === '1234') {
-      this.storageService.setItem('login', 'true');
+
+    
+    const data = this.storageService.getItem('parking_users');
+
+    
+    const usuarios = data ? JSON.parse(data) : [];
+
+    
+    const usuarioEncontrado = usuarios.find((u: any) =>
+
+      u.correo === this.usuario &&
+      u.password === this.password
+
+    );
+
+    
+    if (usuarioEncontrado) {
+
       
-      this.router.navigate(['/']); 
+      this.storageService.setItem('login', 'true');
+
+      
+      this.storageService.setItem(
+        'usuario_actual',
+        JSON.stringify(usuarioEncontrado)
+      );
+
+      
+      this.error = false;
+
+      
+      this.router.navigate(['/']);
+
     } else {
+
+      
       this.error = true;
     }
   }

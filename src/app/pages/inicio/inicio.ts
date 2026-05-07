@@ -8,11 +8,12 @@ import { Navbar } from '../../components/navbar/navbar';
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, Navbar],
+  imports: [CommonModule, RouterOutlet, Navbar],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
 })
 export class InicioComponent {
+  usuarioActual: any = {};
 
   private storageService = inject(StorageService);
 
@@ -36,15 +37,14 @@ export class InicioComponent {
   motosDisponibles = 0;
 
   constructor(private router: Router) {
-    
-    afterNextRender(() => {
-      this.cargarEstado();
-      
-      window.addEventListener('actualizarDashboard', () => {
-        this.cargarEstado();
-      });
-    });
-  }
+
+  this.cargarEstado();
+
+  
+  this.usuarioActual = JSON.parse(
+    localStorage.getItem('usuario_actual') || '{}'
+  );
+}
 
   ngOnInit() {
     // Initial state handled by afterNextRender for browser
@@ -53,6 +53,7 @@ export class InicioComponent {
   cargarEstado() {
 
     const espacios = JSON.parse(this.storageService.getItem('espacios') || '[]');
+    
 
     // CARROS
     const carros = espacios.filter((e: any) => e.tipo === 'Carro');

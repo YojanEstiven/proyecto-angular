@@ -7,7 +7,7 @@
 
 .login-wrapper {
   min-height: 100vh;
-  background: linear-gradient(180deg, #2563EB 0%, rgba(16, 103, 196, 0.8) 35vh, #fefefe 35vh, #fefefe 100%);
+  background: linear-gradient(180deg, #938ada 0%, rgba(50, 49, 107, 0.8) 35vh, #232980 35vh, #292472 100%);
 }
 
 .container {
@@ -19,7 +19,7 @@
 }
 
 .card {
-  background: #ffffff;
+  background: #03133f;
   padding: 48px 40px;
   border-radius: 12px;  
   width: 100%;
@@ -37,7 +37,7 @@
   line-height: 80px;
   border-radius: 50%;
   margin: 0 auto 24px auto;
-  color: #2563EB;
+  color: #5f646e;
 }
 
 h2 {
@@ -70,7 +70,7 @@ h2 {
 .input-field:focus {
   outline: none;
   background-color: #ffffff;
-  border-color: #2563EB;
+  border-color: #5c6475;
   box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.15); 
 }
 
@@ -78,7 +78,7 @@ h2 {
   width: 100%;
   padding: 18px;
   margin-top: 12px;
-  background-color: #FFC107;
+  background-color: #e9ae40;
   color: #333333;
   border: none;
   border-radius: 12px;
@@ -106,7 +106,7 @@ h2 {
 }
 
 .footer-link a {
-  color: #2563EB;
+  color: #030d24;
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;

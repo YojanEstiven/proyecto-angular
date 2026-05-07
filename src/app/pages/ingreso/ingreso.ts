@@ -54,12 +54,26 @@ export class IngresoComponent {
 
   //  filtro búsqueda
   get vehiculosFiltrados() {
-    if (!this.terminoBusqueda) return this.vehiculos;
 
-    return this.vehiculos.filter(v =>
-      v.placa.toLowerCase().includes(this.terminoBusqueda.toLowerCase())
-    );
+  
+  const vehiculosDisponibles = this.vehiculos.filter(v =>
+
+    !this.ingresos.some(i => i.placa === v.placa)
+
+  );
+
+  
+  if (!this.terminoBusqueda) {
+    return vehiculosDisponibles;
   }
+
+  
+  return vehiculosDisponibles.filter(v =>
+    v.placa.toLowerCase().includes(
+      this.terminoBusqueda.toLowerCase()
+    )
+  );
+}
 
   // seleccionar vehículo
   seleccionarVehiculo(v: any) {
@@ -74,69 +88,46 @@ export class IngresoComponent {
     this.dropdownAbierto = true;
   }
 
-  //  REGISTRAR INGRESO (CON MAPA AUTOMÁTICO)
   registrarIngreso() {
 
-    //  parqueadero lleno
-    if (this.ingresos.length >= this.capacidadMaxima) {
-      alert('Parqueadero lleno');
-      return;
-    }
+  if (!this.vehiculoSeleccionado) {
+    alert('Seleccione un vehículo');
+    return;
+  }
 
-    //  no seleccionó vehículo
-    if (!this.vehiculoSeleccionado) {
-      alert('Seleccione un vehículo de la lista');
-      return;
-    }
+  let ingresos = JSON.parse(localStorage.getItem('ingresos') || '[]');
+  let espacios = JSON.parse(localStorage.getItem('espacios') || '[]');
 
-    // ya está dentro
-    const yaEsta = this.ingresos.find(
-      i => i.placa === this.vehiculoSeleccionado.placa
-    );
+  const yaExiste = ingresos.find((i: any) => i.placa === this.vehiculoSeleccionado.placa);
+  if (yaExiste) {
+    alert('Este vehículo ya está dentro');
+    return;
+  }
 
-    if (yaEsta) {
-      alert('Este vehículo ya tiene un ingreso activo.');
-      return;
-    }
+  const espacioLibre = espacios.find(
+    (e: any) => e.tipo === this.vehiculoSeleccionado.tipo && !e.ocupado
+  );
 
-    //  cargar espacios
-    let espacios = JSON.parse(this.storageService.getItem('espacios') || '[]');
+  if (!espacioLibre) {
+    alert('No hay espacios disponibles para ' + this.vehiculoSeleccionado.tipo);
+    return;
+  }
 
-    //  buscar espacio libre según tipo
-    const espacioLibre = espacios.find(
-      (e: any) => e.tipo === this.vehiculoSeleccionado.tipo && !e.ocupado
-    );
+  espacioLibre.ocupado = true;
+  espacioLibre.placa = this.vehiculoSeleccionado.placa;
 
-    //  sin espacio disponible
-    if (!espacioLibre) {
-      alert('No hay espacios disponibles para ' + this.vehiculoSeleccionado.tipo);
-      return;
-    }
+  ingresos.push({
+    placa: this.vehiculoSeleccionado.placa,
+    tipo: this.vehiculoSeleccionado.tipo,
+    espacio: espacioLibre.id,
+    horaIngreso: new Date().toISOString()
+  });
 
-    //  ocupar espacio
-    espacioLibre.ocupado = true;
-    espacioLibre.placa = this.vehiculoSeleccionado.placa;
+  localStorage.setItem('ingresos', JSON.stringify(ingresos));
+  localStorage.setItem('espacios', JSON.stringify(espacios));
 
-    //  crear ingreso
-    const ingreso = {
-      placa: this.vehiculoSeleccionado.placa,
-      tipo: this.vehiculoSeleccionado.tipo,
-      espacio: espacioLibre.id,
-      horaIngreso: new Date().toISOString()
-    };
+  alert(`Vehículo asignado al espacio #${espacioLibre.id}`);
 
-    // guardar datos
-    this.ingresos.push(ingreso);
-    this.storageService.setItem('ingresos', JSON.stringify(this.ingresos));
-    window.dispatchEvent(new Event('actualizarDashboard'));
-    this.storageService.setItem('espacios', JSON.stringify(espacios));
-
-    alert(`Vehículo ingresado en el espacio #${espacioLibre.id}`);
-
-    // limpiar selección
-    this.limpiarSeleccion();
-
-    // redirigir
-    this.router.navigate(['/']);
+  this.router.navigate(['/']);
   }
 }

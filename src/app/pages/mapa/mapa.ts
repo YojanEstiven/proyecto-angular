@@ -1,6 +1,5 @@
-import { Component, inject, afterNextRender } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-mapa',
@@ -9,59 +8,80 @@ import { StorageService } from '../../services/storage.service';
   templateUrl: './mapa.html',
   styleUrls: ['./mapa.css']
 })
-export class MapaComponent {
+export class MapaComponent implements OnInit, DoCheck {
 
-  espacios: any[] = [];
-  private storageService = inject(StorageService);
+  carros: any[] = [];
+  motos: any[] = [];
 
-  constructor() {
-    afterNextRender(() => {
-      this.cargarEspacios();
-    });
+  capacidadCarros = 10;
+  capacidadMotos = 10;
+
+  constructor() {}
+
+  ngOnInit() {
+    this.cargarMapa();
   }
 
-  cargarEspacios() {
-    const data = this.storageService.getItem('espacios');
-
-    if (data) {
-      this.espacios = JSON.parse(data);
-    } else {
-      this.generarEspacios();
-    }
+  ngDoCheck() {
+    this.cargarMapa();
   }
 
-  generarEspacios() {
-    this.espacios = [];
+  cargarMapa() {
+
+    this.capacidadCarros = JSON.parse(
+      localStorage.getItem('capacidad_carros') || '10'
+    );
+
+    this.capacidadMotos = JSON.parse(
+      localStorage.getItem('capacidad_motos') || '10'
+    );
+
+    let espacios = JSON.parse(
+      localStorage.getItem('espacios') || '[]'
+    );
 
     
-    for (let i = 1; i <= 10; i++) {
-      this.espacios.push({
-        id: i,
-        tipo: 'Carro',
-        ocupado: false,
-        placa: null
-      });
+    const totalNecesario =
+      this.capacidadCarros + this.capacidadMotos;
+
+    
+    if (espacios.length !== totalNecesario) {
+
+      espacios = [];
+
+      
+      for (let i = 1; i <= this.capacidadCarros; i++) {
+        espacios.push({
+          id: i,
+          tipo: 'Carro',
+          ocupado: false,
+          placa: null
+        });
+      }
+
+      
+      for (let i = 1; i <= this.capacidadMotos; i++) {
+        espacios.push({
+          id: i,
+          tipo: 'Moto',
+          ocupado: false,
+          placa: null
+        });
+      }
+
+      localStorage.setItem(
+        'espacios',
+        JSON.stringify(espacios)
+      );
     }
 
     
-    for (let i = 11; i <= 20; i++) {
-      this.espacios.push({
-        id: i,
-        tipo: 'Moto',
-        ocupado: false,
-        placa: null
-      });
-    }
+    this.carros = espacios.filter(
+      (e: any) => e.tipo === 'Carro'
+    );
 
-    this.storageService.setItem('espacios', JSON.stringify(this.espacios));
+    this.motos = espacios.filter(
+      (e: any) => e.tipo === 'Moto'
+    );
   }
-
-  get carros() {
-    return this.espacios.filter(e => e.tipo === 'Carro');
-  }
-
-  get motos() {
-    return this.espacios.filter(e => e.tipo === 'Moto');
-  }
-
 }

@@ -1,8 +1,7 @@
-import { Component, inject, afterNextRender } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-salida',
@@ -20,24 +19,17 @@ export class SalidaComponent {
   tarifaMoto = 0;
 
   resumenSalida: any = null;
-
-  
   reciboGenerado: any = null;
 
-  private router = inject(Router);
-  private storageService = inject(StorageService);
-
-  constructor() {
-    afterNextRender(() => {
-      this.cargarDatos();
-    });
+  constructor(private router: Router) {
+    this.cargarDatos();
   }
 
   cargarDatos() {
-    this.ingresos = JSON.parse(this.storageService.getItem('ingresos') || '[]');
+    this.ingresos = JSON.parse(localStorage.getItem('ingresos') || '[]');
 
-    this.tarifaCarro = JSON.parse(this.storageService.getItem('config_carro') || '2000');
-    this.tarifaMoto = JSON.parse(this.storageService.getItem('config_moto') || '1000');
+    this.tarifaCarro = Number(localStorage.getItem('config_carro') || 2000);
+    this.tarifaMoto = Number(localStorage.getItem('config_moto') || 1000);
   }
 
   seleccionarVehiculo(placa: string) {
@@ -80,19 +72,6 @@ export class SalidaComponent {
   }
 
   registrarSalida() {
-    let espacios = JSON.parse(this.storageService.getItem('espacios') || '[]');
-
-
-const espacio = espacios.find(
-  (e: any) => e.placa === this.resumenSalida.placa
-);
-
-if (espacio) {
-  espacio.ocupado = false;
-  espacio.placa = null;
-}
-
-    this.storageService.setItem('espacios', JSON.stringify(espacios));
 
     if (!this.resumenSalida) return;
 
@@ -107,28 +86,136 @@ if (espacio) {
         pago: this.resumenSalida.total
       };
 
-      
       this.reciboGenerado = nuevoHistorial;
 
-     
-      const ingresosActualizados = this.ingresos.filter(
+      this.ingresos = this.ingresos.filter(
         item => item.placa !== this.resumenSalida.placa
       );
-      this.storageService.setItem('ingresos', JSON.stringify(ingresosActualizados));
-      window.dispatchEvent(new Event('actualizarDashboard'));
 
-      const historial = JSON.parse(this.storageService.getItem('historial') || '[]');
+      localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
+
+      let espacios = JSON.parse(localStorage.getItem('espacios') || '[]');
+
+      const espacio = espacios.find(
+        (e: any) => e.placa === this.resumenSalida.placa
+      );
+
+      if (espacio) {
+        espacio.ocupado = false;
+        espacio.placa = null;
+      }
+
+      localStorage.setItem('espacios', JSON.stringify(espacios));
+
+      const historial = JSON.parse(localStorage.getItem('historial') || '[]');
       historial.push(nuevoHistorial);
-      this.storageService.setItem('historial', JSON.stringify(historial));
+      localStorage.setItem('historial', JSON.stringify(historial));
+
+      this.imprimirReciboVentana(nuevoHistorial);
+
+      this.resumenSalida = null;
+      this.vehiculoASalir = '';
 
       alert('Salida procesada correctamente.');
-
-    
     }
   }
 
-  
+  imprimirReciboVentana(recibo: any) {
+
+  const ventana = window.open('', '_blank', 'width=400,height=600');
+
+  if (!ventana) {
+    alert('No se pudo abrir la ventana de impresión');
+    return;
+  }
+
+  ventana.document.write(`
+    <html>
+      <head>
+        <title>Recibo Parqueadero</title>
+        <style>
+          @page {
+    size: 80mm 200mm; /* tamaño tipo ticket */
+    margin: 0;
+  }
+
+  body {
+    font-family: monospace;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    font-size: 12px;
+  }
+    body {
+  width: 80mm;
+  margin: 0 auto;
+  font-size: 12px;
+}
+
+  h2 {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+
+  .line {
+    border-top: 1px dashed #000;
+    margin: 8px 0;
+  }
+
+  .total {
+    font-size: 16px;
+    font-weight: bold;
+  }
+      </style>
+      </head>
+      <body>
+
+        <h2>PARQUEADERO</h2>
+        <p>Comprobante de Pago</p>
+
+        <div class="line"></div>
+
+        <p><strong>Placa:</strong> ${recibo.placa}</p>
+        <p><strong>Tipo:</strong> ${recibo.tipo}</p>
+
+        <div class="line"></div>
+
+        <p><strong>Ingreso:</strong> ${new Date(recibo.ingreso).toLocaleString()}</p>
+        <p><strong>Salida:</strong> ${new Date(recibo.salida).toLocaleString()}</p>
+
+        <div class="line"></div>
+
+        <p><strong>Tiempo:</strong> ${recibo.tiempo}</p>
+
+        <div class="line"></div>
+
+        <h3 class="total">TOTAL: $${recibo.pago}</h3>
+
+        <div class="line"></div>
+
+        <p>¡Gracias por su visita!</p>
+
+      </body>
+    </html>
+  `);
+
+  ventana.document.close();
+
+  ventana.onload = () => {
+    ventana.focus();
+    ventana.print();
+
+    ventana.onafterprint = () => {
+      ventana.close();
+    };
+  };
+}
+
   imprimirRecibo() {
-    window.print();
+    if (this.reciboGenerado) {
+      this.imprimirReciboVentana(this.reciboGenerado);
+    } else {
+      alert('No hay recibo para imprimir');
+    }
   }
 }
