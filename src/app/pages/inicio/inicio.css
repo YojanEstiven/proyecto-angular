@@ -383,12 +383,8 @@
 }
 
 .usuario-info {
+  margin-right: 560px;
   font-weight: 600;
-  color: #374151;
-  background: #f3f4f6;
-  padding: 8px 18px;
-  border-radius: 12px;
-  font-size: 16px;
+  color: #1e293b;
   white-space: nowrap;
-  margin-left: auto;
 }
