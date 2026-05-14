@@ -14,31 +14,37 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
+
         "build": {
           "builder": "@angular/build:application",
+
           "options": {
+
             "browser": "src/main.ts",
+
             "tsConfig": "tsconfig.app.json",
+
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
+
             "styles": [
               "src/styles.css"
             ],
-            
-            
+
             "security": {
               "allowedHosts": []
-            },
-            "ssr": {
-              
             }
+
           },
+
           "configurations": {
+
             "production": {
+
               "budgets": [
                 {
                   "type": "initial",
@@ -51,31 +57,43 @@
                   "maximumError": "20kB"
                 }
               ],
+
               "outputHashing": "all"
             },
+
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
             }
+
           },
+
           "defaultConfiguration": "production"
         },
+
         "serve": {
           "builder": "@angular/build:dev-server",
+
           "configurations": {
+
             "production": {
               "buildTarget": "proyecto-YojanEstiven-angular:build:production"
             },
+
             "development": {
               "buildTarget": "proyecto-YojanEstiven-angular:build:development"
             }
+
           },
+
           "defaultConfiguration": "development"
         },
+
         "test": {
           "builder": "@angular/build:unit-test"
         }
+
       }
     }
   }
