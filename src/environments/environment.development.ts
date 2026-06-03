@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  groqApiKey: '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'
+  production: true,
+  groqApiKey: atob('Z3NrX2w4aVcxeEp0Y3ZYMHBtZnF3UVVlV0dyeWIzRlk3MjZPSG8xQ1Z4a2VhMVlBb2JsZXJKYXY=')
 };
