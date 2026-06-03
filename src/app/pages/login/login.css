@@ -102,11 +102,11 @@ h2 {
 .footer-link {
   margin-top: 32px;
   font-size: 14px;
-  color: #6c757d;
+  color: #ffffff;
 }
 
 .footer-link a {
-  color: #030d24;
+  color: #fdfdfd;
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;

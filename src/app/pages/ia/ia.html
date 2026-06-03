@@ -1,0 +1,91 @@
+<div class="ia-container">
+
+  <div class="ia-header">
+
+    <div class="ia-icon">
+      🤖
+    </div>
+
+    <h1>
+      Inteligencia Artificial ParkYepz
+    </h1>
+
+  </div>
+
+  <div class="ia-input-container">
+
+    <input
+      type="text"
+
+      [(ngModel)]="pregunta"
+
+      class="ia-input"
+
+      placeholder="Pregúntale algo a la IA..."
+    >
+
+    <button
+
+      class="btn-ia"
+
+      (click)="enviarPregunta()">
+
+      Preguntar
+
+    </button>
+
+  </div>
+
+  <div class="preguntas-rapidas">
+
+    <button
+      (click)="usarPregunta('¿Cuántos espacios hay disponibles?')">
+
+      🚗 Espacios
+    </button>
+
+    <button
+      (click)="usarPregunta('¿Qué vehículos están activos?')">
+
+      📋 Vehículos
+    </button>
+
+    <button
+      (click)="usarPregunta('¿Cuántas motos hay activas?')">
+
+      🏍 Motos
+    </button>
+
+    <button
+      (click)="usarPregunta('¿Qué espacios están ocupados?')">
+
+      🅿 Ocupados
+    </button>
+
+    <button
+      (click)="usarPregunta('¿Cuáles son las tarifas actuales?')">
+
+      💰 Tarifas
+    </button>
+
+  </div>
+
+  <div
+    class="estado-ia"
+
+    *ngIf="cargando">
+
+    🤖 Consultando IA...
+
+  </div>
+
+  <div
+    class="respuesta-ia"
+
+    *ngIf="respuesta && !cargando">
+
+    <pre>{{ respuesta }}</pre>
+
+  </div>
+
+</div>

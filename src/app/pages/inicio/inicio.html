@@ -6,8 +6,8 @@
     <span class="logo-text">ParkYepz</span>
   </div>
   <div class="usuario-info">
-  👤 {{ usuarioActual.nombre }}
-</div>
+    👤 {{ usuarioActual.nombre }}
+  </div>
 
   <div class="dashboard-container">
     <div class="dashboard-card">
@@ -26,14 +26,42 @@
       </p>
     </div>
   </div>
-  
 </div>
 
+<div class="panel-inteligente" *ngIf="!isHome">
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>🕒 Hora Actual</h3>
+      <p>{{ horaActual }}</p>
+    </div>
+
+    <div class="info-card">
+      <h3>🌤 Clima : Popayan-Colombia </h3>
+      <p>{{ clima }}</p>
+      <small>{{ temperatura }}</small>
+    </div>
+  </div>
+</div>
+
+<div class="ia-floating-toast" *ngIf="mensajeActivoIA">
+  <div class="toast-header">
+    <span class="toast-avatar">😎</span>
+    <div class="toast-title-block">
+      <h5>ParkYepz </h5>
+      <span class="toast-pulse"></span>
+    </div>
+  </div>
+  <div class="toast-body">
+    <ng-container *ngFor="let msg of [mensajeActivoIA]">
+      <div class="toast-item">
+        {{ msg }}
+      </div>
+    </ng-container>
+  </div>
+</div>
 
 <div class="main-wrapper" [class.active-module]="!isHome">
-  
   <div class="home-container" *ngIf="isHome">
-
     <div class="top-header">
       <button class="logout-pill" (click)="logout()">Cerrar Sesión</button>
     </div>
@@ -48,7 +76,6 @@
 
     <main class="grid-container">
       <div class="cards-grid">
-
         <div *ngFor="let item of navItems" 
              class="card-modern" 
              [ngClass]="item.iconClass"
@@ -75,23 +102,18 @@
             <span>Acceder</span>
             <span class="arrow-icon">→</span>
           </div>
-
         </div>
-
       </div>
     </main>
 
     <footer class="home-footer">
       <p>Sistema de Parqueadero • 2026</p>
     </footer>
-
   </div>
 
-  
   <div class="module-outlet" *ngIf="!isHome">
     <div class="outlet-wrapper">
       <router-outlet></router-outlet>
     </div>
   </div>
-
 </div>

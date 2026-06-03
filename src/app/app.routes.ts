@@ -8,13 +8,15 @@ import { ConfiguracionComponent } from './pages/configuracion/configuracion';
 import { RegistroComponent } from './pages/registro/registro';
 import { Routes } from '@angular/router';
 import { MapaComponent } from './pages/mapa/mapa';
+import { IaComponent } from './pages/ia/ia';
 
 
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
-  { 
+  
+  {
     
     path: '', 
     component: InicioComponent,
@@ -25,7 +27,8 @@ export const routes: Routes = [
       { path: 'salida', component: SalidaComponent },
       { path: 'historial', component: HistorialComponent },
       { path: 'configuracion', component: ConfiguracionComponent },
-      { path: 'mapa', component: MapaComponent }
+      { path: 'mapa', component: MapaComponent },
+      { path: 'ia', component: IaComponent }
     ]
   }
 ];
