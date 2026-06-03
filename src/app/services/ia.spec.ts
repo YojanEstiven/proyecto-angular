@@ -1,14 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing'; 
-import { IaService } from './ia'; 
+import { provideHttpClient } from '@angular/common/http';
+import { IaService } from './ia';
 
 describe('IaService', () => {
   let service: IaService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], 
-      providers: [IaService]
+      providers: [
+        IaService,
+        provideHttpClient() // Esto le da el HttpClient que necesita para no fallar
+      ]
     });
     service = TestBed.inject(IaService);
   });
