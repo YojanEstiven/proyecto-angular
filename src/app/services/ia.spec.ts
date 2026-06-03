@@ -1,18 +1,19 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'; 
+import { IaService } from './ia'; 
 
-import { Ia } from './ia';
-
-describe('Ia', () => {
-  let service: Ia;
+describe('IaService', () => {
+  let service: IaService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Ia);
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule], 
+      providers: [IaService]
+    });
+    service = TestBed.inject(IaService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });
-private apiKey =
-    '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';
